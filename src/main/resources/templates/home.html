@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .container-flex {
+            flex: 1;
+        }
+        footer {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<header class="bg-primary text-white text-center py-4">
+    <h1>Pharmacy Management System</h1>
+</header>
+
+<div class="container container-flex">
+    <h2 class="text-center mt-4">Welcome to the Pharmacy Management System</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Drug List</h5>
+                    <p class="card-text">View and manage the list of drugs available in the pharmacy.</p>
+                    <a href="/drugs" class="btn btn-primary">Go to Drug List</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Add New Drug</h5>
+                    <p class="card-text">Add a new drug to the pharmacy inventory.</p>
+                    <a href="/add-drug" class="btn btn-primary">Add Drug</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Inventory</h5>
+                    <p class="card-text">Update and manage the pharmacy inventory.</p>
+                    <a href="/manage-inventory" class="btn btn-primary">Manage Inventory</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-dark text-white py-3 mt-auto">
+    <div class="container">
+        <p>&copy; 2024 Pharmacy Management System</p>
+    </div>
+</footer>
+</body>
+
+</html>

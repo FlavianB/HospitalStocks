@@ -17,7 +17,6 @@ public class Drug {
     private String name;
     private String description;
     private String manufacturer;
-    private LocalDate expirationDate;
 
     @ManyToMany
     @JoinTable(

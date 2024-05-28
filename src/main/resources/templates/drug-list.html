@@ -38,12 +38,22 @@
 
 <div class="container">
     <h2 class="text-center">List of Drugs</h2>
+    <div class="text-right mb-3">
+        <label for="sort">Sort by: </label>
+        <select id="sort" onchange="location = this.value;">
+            <option th:value="'/drug-list?sortBy=id'" th:selected="${sortBy == 'id'}">ID</option>
+            <option th:value="'/drug-list?sortBy=name'" th:selected="${sortBy == 'name'}">Name</option>
+            <option th:value="'/drug-list?sortBy=description'" th:selected="${sortBy == 'description'}">Description</option>
+            <option th:value="'/drug-list?sortBy=manufacturer'" th:selected="${sortBy == 'manufacturer'}">Manufacturer</option>
+        </select>
+    </div>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Description</th>
+            <th>Manufacturer</th>
         </tr>
         </thead>
         <tbody>
@@ -51,6 +61,7 @@
             <td th:text="${drug.id}"></td>
             <td th:text="${drug.name}"></td>
             <td th:text="${drug.description}"></td>
+            <td th:text="${drug.manufacturer}"></td>
         </tr>
         </tbody>
     </table>
