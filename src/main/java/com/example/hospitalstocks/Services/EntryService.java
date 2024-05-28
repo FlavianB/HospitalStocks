@@ -20,5 +20,13 @@ public class EntryService {
     public Entry saveEntry(Entry entry) {
         return entryRepository.save(entry);
     }
+
+    public List<Entry> getAllEntries() {
+        return entryRepository.findAll();
+    }
+
+    public Entry getEntryById(Long id) {
+        return entryRepository.findById(id).orElse(null);
+    }
     // Other CRUD operations
 }

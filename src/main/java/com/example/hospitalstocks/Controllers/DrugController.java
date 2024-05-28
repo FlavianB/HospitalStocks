@@ -44,5 +44,11 @@ public class DrugController {
         return "redirect:/drug-list";
     }
 
-    // Other endpoints for update, delete
+    @PutMapping("/{id}")
+    public String updateDrug(@PathVariable Long id, @ModelAttribute Drug drug) {
+        drug.setId(id);
+        drugService.saveDrug(drug);
+        return "redirect:/drug-list";
+    }
 }
+

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entry List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        footer {
+            margin-top: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<header class="bg-primary text-white text-center py-4">
+    <h1>Hospital Stock Management System</h1>
+</header>
+
+<div class="container">
+    <h2 class="text-center">List of Entries</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Quantity</th>
+            <th>Drug</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="entry : ${entries}">
+            <td th:text="${entry.id}"></td>
+            <td th:text="${entry.date}"></td>
+            <td th:text="${entry.quantity}"></td>
+            <td th:text="${entry.drug.name}"></td>
+            <td>
+                <a th:href="@{entries/download/{id}(id=${entry.id})}" class="btn btn-primary">Download PDF</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer class="bg-dark text-white py-3">
+    <div class="container">
+        <p>&copy; Hospital Stock Management System</p>
+    </div>
+</footer>
+</body>
+
+</html>
