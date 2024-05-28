@@ -18,6 +18,6 @@ public class Supplier {
     private String name;
     private String contactDetails;
 
-    @OneToMany(mappedBy = "supplier")
+    @ManyToMany(mappedBy = "suppliers")
     private List<Drug> drugs;
 }

@@ -19,6 +19,14 @@ public class Drug {
     private String manufacturer;
     private LocalDate expirationDate;
 
+    @ManyToMany
+    @JoinTable(
+            name = "drug_supplier",
+            joinColumns = @JoinColumn(name = "drug_id"),
+            inverseJoinColumns = @JoinColumn(name = "supplier_id")
+    )
+    private List<Supplier> suppliers;
+
     @OneToMany(mappedBy = "drug")
     private List<Entry> entries;
 }
