@@ -33,7 +33,7 @@
 
 <body>
 <header class="bg-primary text-white text-center py-4">
-    <h1>Pharmacy Management System</h1>
+    <h1>Hospital Stock Management System</h1>
 </header>
 
 <div class="container">
@@ -54,6 +54,7 @@
             <th>Name</th>
             <th>Description</th>
             <th>Manufacturer</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -62,6 +63,9 @@
             <td th:text="${drug.name}"></td>
             <td th:text="${drug.description}"></td>
             <td th:text="${drug.manufacturer}"></td>
+            <td>
+                <a th:href="@{/drug-list/{id}(id=${drug.id})}" class="btn btn-info">View Details</a>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -69,7 +73,7 @@
 
 <footer class="bg-dark text-white py-3">
     <div class="container">
-        <p>&copy; 2024 Pharmacy Management System</p>
+        <p>&copy; Hospital Stock Management System</p>
     </div>
 </footer>
 </body>

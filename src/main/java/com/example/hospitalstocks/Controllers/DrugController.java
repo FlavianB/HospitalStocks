@@ -32,14 +32,17 @@ public class DrugController {
         return "drug"; // Refers to the Thymeleaf template 'drug.html'
     }
 
-//    @GetMapping("/{name}")
-//    public String getDrug(@PathVariable String name, Model model) {
-//        Drug drug = drugService.getDrugByName(name);
-//        model.addAttribute("drug", drug);
-//        return "drug"; // Refers to the Thymeleaf template 'drug.html'
-//    }
+    @GetMapping("/add")
+    public String addDrugForm(Model model) {
+        model.addAttribute("drug", new Drug());
+        return "add-drug"; // Refers to the Thymeleaf template 'add-consumption.html'
+    }
 
-
+    @PostMapping("/add")
+    public String addDrug(@ModelAttribute Drug drug) {
+        drugService.saveDrug(drug);
+        return "redirect:/drug-list";
+    }
 
     // Other endpoints for update, delete
 }

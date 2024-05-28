@@ -1,5 +1,6 @@
 package com.example.hospitalstocks.Configs;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
@@ -9,9 +10,10 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 public class GeneralConfiguration {
     @Bean
     @Description("Spring Message Resolver")
-    public ResourceBundleMessageSource messageSource() {
+    public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("messages");
+        messageSource.setBasename("messages"); // Assuming your message properties files are named messages.properties
+        messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
 }
