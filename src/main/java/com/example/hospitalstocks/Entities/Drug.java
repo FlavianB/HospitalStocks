@@ -1,13 +1,11 @@
 package com.example.hospitalstocks.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Setter
@@ -20,5 +18,7 @@ public class Drug {
     private String description;
     private String manufacturer;
     private LocalDate expirationDate;
-    // Getters and Setters
+
+    @OneToMany(mappedBy = "drug")
+    private List<Entry> entries;
 }
