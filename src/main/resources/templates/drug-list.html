@@ -29,7 +29,7 @@
     <h2 class="text-center">List of Drugs</h2>
     <div class="mb-3 align-self-start form-group">
         <label for="sort">Sort by: </label>
-        <select id="sort" class="form-control" onchange="location = this.value;">
+        <select id="sort" class="form-control" onchange="location = this.value + '&name=' + document.getElementById('name').value;">
             <option th:value="'/drug-list?sortBy=id'" th:selected="${sortBy == 'id'}">
                 ID
             </option>
@@ -43,6 +43,14 @@
                 Manufacturer
             </option>
         </select>
+    </div>
+    <div class="mb-3 align-self-start form-group">
+        <form th:action="@{/drug-list}" method="get">
+            <label for="name">Search by name: </label>
+            <input type="text" id="name" name="name" class="form-control" th:value="${name}">
+            <input type="hidden" name="sortBy" th:value="${sortBy}">
+            <button type="submit" class="btn btn-primary mt-2">Search</button>
+        </form>
     </div>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">

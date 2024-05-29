@@ -5,7 +5,8 @@ import com.example.hospitalstocks.Repositories.DrugRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class DrugService {
@@ -14,8 +15,20 @@ public class DrugService {
         this.drugRepository = drugRepository;
     }
 
-    public List<Drug> getAllDrugs(String sortBy) {
+    public List<Drug> getAllDrugs(String sortBy, String name) {
+        if (name.isEmpty()) {
+            List<Drug> drugs = drugRepository.findAll();
+            switch (sortBy) {
+                case "name" -> drugs.sort(Comparator.comparing(Drug::getName));
+                case "manufacturer" -> drugs.sort(Comparator.comparing(Drug::getManufacturer));
+                case "description" -> drugs.sort(Comparator.comparing(Drug::getDescription));
+                default -> drugs.sort(Comparator.comparing(Drug::getId));
+            }
+            return drugs;
+        }
+        final String processedName = name.toLowerCase().substring(0, 1).toUpperCase() + name.toLowerCase().substring(1);
         List<Drug> drugs = drugRepository.findAll();
+        drugs = drugs.stream().filter(drug -> drug.getName().startsWith(processedName)).collect(Collectors.toCollection(ArrayList::new));
         switch (sortBy) {
             case "name" -> drugs.sort(Comparator.comparing(Drug::getName));
             case "manufacturer" -> drugs.sort(Comparator.comparing(Drug::getManufacturer));

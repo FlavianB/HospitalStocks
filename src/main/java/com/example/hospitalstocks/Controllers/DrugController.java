@@ -18,10 +18,11 @@ public class DrugController {
     }
 
     @GetMapping("")
-    public String getAllDrugs(@RequestParam(defaultValue = "id") String sortBy, Model model) {
-        List<Drug> drugs = drugService.getAllDrugs(sortBy);
+    public String getAllDrugs(@RequestParam(defaultValue = "id") String sortBy, @RequestParam(defaultValue = "") String name, Model model) {
+        List<Drug> drugs = drugService.getAllDrugs(sortBy, name);
         model.addAttribute("drugs", drugs);
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("name", name);
         return "drug-list"; // Refers to the Thymeleaf template 'drug-list.html'
     }
 
