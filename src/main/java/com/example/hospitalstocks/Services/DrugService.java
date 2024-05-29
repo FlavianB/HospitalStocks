@@ -26,9 +26,9 @@ public class DrugService {
             }
             return drugs;
         }
-        final String processedName = name.toLowerCase().substring(0, 1).toUpperCase() + name.toLowerCase().substring(1);
+        final String processedName = name.trim().toLowerCase();
         List<Drug> drugs = drugRepository.findAll();
-        drugs = drugs.stream().filter(drug -> drug.getName().startsWith(processedName)).collect(Collectors.toCollection(ArrayList::new));
+        drugs = drugs.stream().filter(drug -> drug.getName().toLowerCase().contains(processedName)).collect(Collectors.toCollection(ArrayList::new));
         switch (sortBy) {
             case "name" -> drugs.sort(Comparator.comparing(Drug::getName));
             case "manufacturer" -> drugs.sort(Comparator.comparing(Drug::getManufacturer));
@@ -39,6 +39,9 @@ public class DrugService {
     }
 
     public Drug saveDrug(Drug drug) {
+        drug.setName(drug.getName().trim());
+        drug.setManufacturer(drug.getManufacturer().trim());
+        drug.setDescription(drug.getDescription().trim());
         return drugRepository.save(drug);
     }
 
