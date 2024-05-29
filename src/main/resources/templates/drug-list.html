@@ -27,31 +27,34 @@
 </header>
 <main class="container d-flex py-4 w-100 flex-grow-1 flex-column align-items-center justify-content-center">
     <h2 class="text-center">List of Drugs</h2>
-    <div class="mb-3 align-self-start form-group">
-        <label for="sort">Sort by: </label>
-        <select id="sort" class="form-control" onchange="location = this.value + '&name=' + document.getElementById('name').value;">
-            <option th:value="'/drug-list?sortBy=id'" th:selected="${sortBy == 'id'}">
-                ID
-            </option>
-            <option th:value="'/drug-list?sortBy=name'" th:selected="${sortBy == 'name'}">
-                Name
-            </option>
-            <option th:value="'/drug-list?sortBy=description'" th:selected="${sortBy == 'description'}">
-                Description
-            </option>
-            <option th:value="'/drug-list?sortBy=manufacturer'" th:selected="${sortBy == 'manufacturer'}">
-                Manufacturer
-            </option>
-        </select>
-    </div>
-    <div class="mb-3 align-self-start form-group">
-        <form th:action="@{/drug-list}" method="get">
-            <label for="name">Search by name: </label>
-            <input type="text" id="name" name="name" class="form-control" th:value="${name}">
-            <input type="hidden" name="sortBy" th:value="${sortBy}">
-            <button type="submit" class="btn btn-primary mt-2">Search</button>
-        </form>
-    </div>
+    <form class="d-flex align-items-center justify-content-between mb-3 w-100">
+        <div class="form-group">
+            <label for="sort" class="d-none">Sort by</label>
+            <select id="sort" class="form-control"
+                    onchange="location = '/drug-list?sortBy=' + this.value + '&name=' + document.getElementById('name').value;">
+                <option th:value="''" th:selected="${sortBy == ''}">
+                    Sort by...
+                </option>
+                <option th:value="'id'" th:selected="${sortBy == 'id'}">
+                    ID
+                </option>
+                <option th:value="'name'" th:selected="${sortBy == 'name'}">
+                    Name
+                </option>
+                <option th:value="'description'" th:selected="${sortBy == 'description'}">
+                    Description
+                </option>
+                <option th:value="'manufacturer'" th:selected="${sortBy == 'manufacturer'}">
+                    Manufacturer
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name" class="d-none">Search</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Search" th:value="${name}"
+                   onchange="location = '/drug-list?sortBy=' + document.getElementById('sort').value + '&name=' + this.value;">
+        </div>
+    </form>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
