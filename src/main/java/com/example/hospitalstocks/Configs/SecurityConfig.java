@@ -27,20 +27,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)// Disable CSRF protection
-                .authorizeHttpRequests(authz->authz
-                        .requestMatchers("/login*", "/css/**", "/js/**").permitAll() // Allow access to login page and static resources
-                        .anyRequest().authenticated() // All other requests must be authenticated
+                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/login*", "/signup", "/css/**", "/js/**").permitAll() // Allow access to login, sign-up pages and static resources
+                        .anyRequest().hasAnyRole("ADMIN", "USER") // All other requests must be authenticated
                 )
-                .formLogin(
-                        form -> form
-                                .loginPage("/login")
-                                .loginProcessingUrl("/perform_login")
-                                .defaultSuccessUrl("/", true)
-                                .failureUrl("/login?error=true")
-                                .permitAll()
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/perform_login")
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/login?error=true")
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/perform_logout")
+                        .logoutSuccessUrl("/login?logout=true")
+                        .permitAll()
                 );
-
         return http.build();
     }
 

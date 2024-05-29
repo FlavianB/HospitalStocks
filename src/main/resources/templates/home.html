@@ -19,11 +19,22 @@
         footer {
             text-align: center;
         }
+        .header-buttons {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .header-buttons a {
+            margin-left: 10px;
+        }
     </style>
 </head>
 
 <body>
 <header class="bg-primary text-white text-center py-4">
+    <div class="container header-buttons">
+        <a href="/signup" class="btn btn-light">Sign Up</a>
+        <a href="/perform_logout" class="btn btn-light">Log Out</a>
+    </div>
     <h1>Pharmacy Management System</h1>
 </header>
 
@@ -44,7 +55,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Add New Drug</h5>
                     <p class="card-text">Add a new drug to the pharmacy inventory.</p>
-                    <a href="drug-list/add" class="btn btn-primary">Add Drug</a>
+                    <a href="/drug-list/add" class="btn btn-primary">Add Drug</a>
                 </div>
             </div>
         </div>
