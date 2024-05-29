@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,43 +7,41 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            min-height: 100vh;
         }
-        .container {
-            margin-top: 50px;
+
+        .btn-crimson {
+            background-color: crimson;
+            color: white;
         }
-        table {
-            width: 100%;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        footer {
-            margin-top: 50px;
-            text-align: center;
+
+        .btn-crimson:hover {
+            background-color: darkred;
+            color: white;
         }
     </style>
 </head>
-
-<body>
-<header class="bg-primary text-white text-center py-4">
+<body class="d-flex flex-column align-items-center justify-content-space-between">
+<header class="bg-danger text-white text-center py-4 w-100">
     <h1>Hospital Stock Management System</h1>
 </header>
-
-<div class="container">
+<main class="container d-flex py-4 w-100 flex-grow-1 flex-column align-items-center justify-content-center">
     <h2 class="text-center">List of Drugs</h2>
-    <div class="text-right mb-3">
+    <div class="mb-3 align-self-start form-group">
         <label for="sort">Sort by: </label>
-        <select id="sort" onchange="location = this.value;">
-            <option th:value="'/drug-list?sortBy=id'" th:selected="${sortBy == 'id'}">ID</option>
-            <option th:value="'/drug-list?sortBy=name'" th:selected="${sortBy == 'name'}">Name</option>
-            <option th:value="'/drug-list?sortBy=description'" th:selected="${sortBy == 'description'}">Description</option>
-            <option th:value="'/drug-list?sortBy=manufacturer'" th:selected="${sortBy == 'manufacturer'}">Manufacturer</option>
+        <select id="sort" class="form-control" onchange="location = this.value;">
+            <option th:value="'/drug-list?sortBy=id'" th:selected="${sortBy == 'id'}">
+                ID
+            </option>
+            <option th:value="'/drug-list?sortBy=name'" th:selected="${sortBy == 'name'}">
+                Name
+            </option>
+            <option th:value="'/drug-list?sortBy=description'" th:selected="${sortBy == 'description'}">
+                Description
+            </option>
+            <option th:value="'/drug-list?sortBy=manufacturer'" th:selected="${sortBy == 'manufacturer'}">
+                Manufacturer
+            </option>
         </select>
     </div>
     <table class="table table-bordered table-striped">
@@ -64,18 +61,16 @@
             <td th:text="${drug.description}"></td>
             <td th:text="${drug.manufacturer}"></td>
             <td>
-                <a th:href="@{/drug-list/{id}(id=${drug.id})}" class="btn btn-info">View Details</a>
+                <a th:href="@{/drug-list/{id}(id=${drug.id})}" class="btn btn-crimson">View Details</a>
             </td>
         </tr>
         </tbody>
     </table>
-</div>
-
-<footer class="bg-dark text-white py-3">
+</main>
+<footer class="bg-dark text-white text-center py-3 w-100">
     <div class="container">
         <p>&copy; Hospital Stock Management System</p>
     </div>
 </footer>
 </body>
-
 </html>
