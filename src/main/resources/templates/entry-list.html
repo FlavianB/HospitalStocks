@@ -5,7 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entry List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/3811cdfa76.js" crossorigin="anonymous"></script>
     <style>
+        .btn-header {
+            background-color: transparent;
+            color: white;
+        }
+
+        .btn-header:hover {
+            background-color: transparent;
+            color: #e7e7e7;
+        }
+
         .btn-crimson {
             background-color: crimson;
             color: white;
@@ -14,10 +25,6 @@
         .btn-crimson:hover {
             background-color: darkred;
             color: white;
-        }
-
-        #dateFilterForm {
-            display: none;
         }
     </style>
     <script>
@@ -39,32 +46,37 @@
     </script>
 </head>
 <body class="d-flex flex-column align-items-center justify-content-space-between min-vh-100">
-<header class="bg-danger text-white text-center py-4 w-100">
-    <h1>Hospital Stock Management System</h1>
+<header class="bg-danger text-white p-4 w-100 d-flex justify-content-between align-items-center">
+    <h3>Hospital Management System</h3>
+    <div>
+        <a href="/" class="btn btn-header"><i class="fa-solid fa-house"></i></a>
+        <a href="/perform_logout" class="btn btn-header"><i class="fa-solid fa-right-from-bracket"></i></a>
+    </div>
 </header>
-<main class="container d-flex py-4 w-100 flex-grow-1 flex-column align-items-center justify-content-center">
-    <h2 class="text-center">List of Entries</h2>
-    <form class="d-flex align-items-center justify-content-between mb-3 w-100">
-        <div class="form-group">
+<main class="container d-flex py-4 w-100 flex-grow-1 flex-column align-items-center justify-content-start" style="gap: 20px;">
+    <h2 class="text-center mt-4">List of Entries</h2>
+    <form class="d-flex align-items-center justify-content-between w-100">
+        <div class="form-group m-0">
             <label for="sort" class="d-none">Sort by</label>
             <select id="sort" class="form-control" onchange="applySort()">
                 <option th:value="date" th:selected="${sortBy == 'date'}">Date</option>
                 <option th:value="drug" th:selected="${sortBy == 'drug'}">Drug</option>
             </select>
         </div>
-        <button type="button" class="btn btn-primary" onclick="toggleDateFilterForm()">Filter</button>
+        <button type="button" class="btn btn-danger" onclick="toggleDateFilterForm()">Filter</button>
     </form>
-    <form id="dateFilterForm" class="d-flex align-items-center justify-content-between mb-3 w-100" method="get" action="/entries">
+    <form id="dateFilterForm" class="align-items-center justify-content-start w-100" style="display: none; gap: 20px;" method="get" action="/entries">
         <input type="hidden" id="sortBy" name="sortBy" th:value="${sortBy}">
-        <div class="form-group">
+        <div class="form-group m-0">
             <label for="startDate" class="d-none">Start Date</label>
             <input type="date" id="startDate" name="startDate" class="form-control" th:value="${startDate}" placeholder="Start Date">
         </div>
-        <div class="form-group">
+        <span style="font-size: 1.5rem;">→</span>
+        <div class="form-group m-0">
             <label for="endDate" class="d-none">End Date</label>
             <input type="date" id="endDate" name="endDate" class="form-control" th:value="${endDate}" placeholder="End Date">
         </div>
-        <button type="submit" class="btn btn-primary">Apply</button>
+        <button type="submit" class="btn btn-danger">Apply</button>
     </form>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
@@ -93,24 +105,22 @@
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${!entryPage.hasPrevious()} ? 'disabled'">
                 <a class="page-link" th:href="@{/entries(page=${entryPage.number - 1}, sortBy=${sortBy}, startDate=${startDate}, endDate=${endDate})}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
+                    <span aria-hidden="true" th:classappend="${entryPage.hasPrevious()} ? 'text-danger'">&laquo;</span>
                 </a>
             </li>
             <li class="page-item active">
-                <span class="page-link" th:text="${entryPage.number + 1}">1</span>
+                <span class="page-link bg-danger border-danger" th:text="${entryPage.number + 1}">1</span>
             </li>
             <li class="page-item" th:classappend="${!entryPage.hasNext()} ? 'disabled'">
                 <a class="page-link" th:href="@{/entries(page=${entryPage.number + 1}, sortBy=${sortBy}, startDate=${startDate}, endDate=${endDate})}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
+                    <span aria-hidden="true" th:classappend="${entryPage.hasNext()} ? 'text-danger'">&raquo;</span>
                 </a>
             </li>
         </ul>
     </nav>
 </main>
-<footer class="bg-dark text-white text-center py-3 w-100">
-    <div class="container">
-        <p>&copy; Hospital Stock Management System</p>
-    </div>
+<footer class="bg-dark text-white py-3 w-100 d-flex align-items-center justify-content-center">
+    <p class="m-0">&copy; Hospital Stock Management System</p>
 </footer>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

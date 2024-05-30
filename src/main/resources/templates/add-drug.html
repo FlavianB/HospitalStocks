@@ -5,39 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Drug</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/3811cdfa76.js" crossorigin="anonymous"></script>
+    <style>
+        .btn-header {
+            background-color: transparent;
+            color: white;
+        }
+
+        .btn-header:hover {
+            background-color: transparent;
+            color: #e7e7e7;
+        }
+
+        .container {
+            padding: 0;
+        }
+    </style>
 </head>
-<body class="d-flex flex-column align-items-center justify-content-space-between">
-<header class="bg-danger text-white text-center py-4 w-100">
-    <h1>Hospital Stock Management System</h1>
+<body class="d-flex flex-column align-items-center justify-content-space-between min-vh-100">
+<header class="bg-danger text-white p-4 w-100 d-flex justify-content-between align-items-center">
+    <h3>Hospital Management System</h3>
+    <div>
+        <a href="/" class="btn btn-header"><i class="fa-solid fa-house"></i></a>
+        <a href="/perform_logout" class="btn btn-header"><i class="fa-solid fa-right-from-bracket"></i></a>
+    </div>
 </header>
-<main class="d-flex w-100 flex-grow-1 flex-column align-items-center justify-content-center min-vh-100">
-    <div class="container">
-        <h2 class="text-center">Add New Drug</h2>
-        <form th:action="@{/drug-list/add}" th:object="${drug}" method="post">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" th:field="*{name}" class="form-control"/>
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <input type="text" id="description" th:field="*{description}" class="form-control"/>
-            </div>
-            <div class="form-group">
-                <label for="manufacturer">Manufacturer:</label>
-                <input type="text" id="manufacturer" th:field="*{manufacturer}" class="form-control"/>
-            </div>
-            <!-- Add other fields as needed -->
-            <div class="form-group">
-                <button type="submit" class="btn btn-danger">Add Drug</button>
-            </div>
-        </form>
-        <a th:href="@{/drug-list}" class="btn btn-secondary">Back to Drug List</a>
+<main class="d-flex w-100 flex-grow-1 flex-column align-items-center justify-content-start"
+      style="gap: 20px;">
+    <h2 class="text-center mt-4">Add New Drug</h2>
+    <div class="container card">
+        <div class="card-body">
+            <form class="container" th:action="@{/drug-list/add}" th:object="${drug}" method="post">
+                <div class="form-group">
+                    <label for="name" class="d-none">Name</label>
+                    <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Name"/>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="d-none">Description</label>
+                    <textarea id="description" th:field="*{description}" class="form-control"
+                              placeholder="Description"/>
+                </div>
+                <div class="form-group">
+                    <label for="manufacturer" class="d-none">Manufacturer</label>
+                    <input type="text" id="manufacturer" th:field="*{manufacturer}" class="form-control"
+                           placeholder="Manufacturer"/>
+                </div>
+                <!-- Add other fields as needed -->
+                <div class="form-group m-0">
+                    <button type="submit" class="btn btn-danger">Add Drug</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <a th:href="@{/drug-list}" class="btn btn-secondary">Back to Drug List</a>
+        </div>
     </div>
 </main>
-<footer class="bg-dark text-white text-center py-3 w-100">
-    <div class="container">
-        <p>&copy; Hospital Stock Management System</p>
-    </div>
+<footer class="bg-dark text-white py-3 w-100 d-flex align-items-center justify-content-center">
+    <p class="m-0">&copy; Hospital Stock Management System</p>
 </footer>
 </body>
 </html>
