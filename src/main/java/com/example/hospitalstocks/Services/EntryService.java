@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -27,7 +28,7 @@ public class EntryService {
         return entryRepository.findAllByDateBetween(startDate, endDate, pageable);
     }
 
-    public Entry getEntryById(Long id) {
+    public Entry getEntryById(UUID id) {
         return entryRepository.findById(id).orElse(null);
     }
 

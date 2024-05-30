@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/entries")
@@ -56,7 +57,7 @@ public class EntryController {
     }
 
     @GetMapping("/{id}")
-    public String getEntry(@PathVariable Long id, Model model) {
+    public String getEntry(@PathVariable UUID id, Model model) {
         Entry entry = entryService.getEntryById(id);
         model.addAttribute("entry", entry);
         return "entry"; // Refers to the Thymeleaf template 'entry.html'
@@ -75,7 +76,7 @@ public class EntryController {
     }
 
     @PutMapping("/{id}")
-    public String updateEntry(@PathVariable Long id, @ModelAttribute Entry entry) {
+    public String updateEntry(@PathVariable UUID id, @ModelAttribute Entry entry) {
         entry.setId(id);
         entryService.saveEntry(entry);
         return "redirect:/entries";
@@ -83,7 +84,7 @@ public class EntryController {
 
     @GetMapping("/download/{id}")
     @ResponseBody
-    public ResponseEntity<FileSystemResource> downloadFile(@PathVariable Long id) {
+    public ResponseEntity<FileSystemResource> downloadFile(@PathVariable UUID id) {
         Entry entry = entryService.getEntryById(id);
         String pdfPath = pdfService.generateEntryPDF(entry);
         FileSystemResource resource = new FileSystemResource(pdfPath);

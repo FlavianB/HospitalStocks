@@ -50,6 +50,16 @@
                     <input type="text" id="manufacturer" th:field="*{manufacturer}" class="form-control"
                            placeholder="Manufacturer"/>
                 </div>
+                <div class="form-group">
+                    <label for="main-component" class="d-none">Manufacturer</label>
+                    <input type="text" id="main-component" th:field="*{mainComponent}" class="form-control"
+                           placeholder="Main Component"/>
+                </div>
+                <div class="form-group">
+                    <label for="secondary-component" class="d-none">Manufacturer</label>
+                    <input type="text" id="secondary-component" th:field="*{secondaryComponent}" class="form-control"
+                           placeholder="Secondary Component"/>
+                </div>
                 <!-- Add other fields as needed -->
                 <div class="form-group m-0">
                     <button type="submit" class="btn btn-danger">Add Drug</button>

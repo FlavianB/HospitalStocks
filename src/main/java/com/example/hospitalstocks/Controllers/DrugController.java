@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @Controller
 @RequestMapping("/drug-list")
 public class DrugController {
@@ -36,7 +38,7 @@ public class DrugController {
     }
 
     @GetMapping("/{id}")
-    public String getDrug(@PathVariable Long id, Model model) {
+    public String getDrug(@PathVariable UUID id, Model model) {
         Drug drug = drugService.getDrugById(id);
         model.addAttribute("drug", drug);
         return "drug"; // Refers to the Thymeleaf template 'drug.html'
@@ -55,7 +57,7 @@ public class DrugController {
     }
 
     @PutMapping("/{id}")
-    public String updateDrug(@PathVariable Long id, @ModelAttribute Drug drug) {
+    public String updateDrug(@PathVariable UUID id, @ModelAttribute Drug drug) {
         drug.setId(id);
         drugService.saveDrug(drug);
         return "redirect:/drug-list";

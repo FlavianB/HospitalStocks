@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -13,8 +14,8 @@ import java.util.List;
 @Table(name = "app_user")
 public class AppUser {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    private UUID id;
 
     private String username;
     private String password;

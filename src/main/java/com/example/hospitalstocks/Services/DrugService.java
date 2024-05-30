@@ -6,6 +6,8 @@ import com.example.hospitalstocks.Entities.Drug;
 import com.example.hospitalstocks.Repositories.DrugRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class DrugService {
     private final DrugRepository drugRepository;
@@ -29,7 +31,7 @@ public class DrugService {
         return drugRepository.save(drug);
     }
 
-    public Drug getDrugById(Long id) {
+    public Drug getDrugById(UUID id) {
         return drugRepository.findById(id).orElse(null);
     }
     // Other CRUD operations

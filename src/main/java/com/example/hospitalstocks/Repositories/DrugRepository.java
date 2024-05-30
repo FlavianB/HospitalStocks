@@ -6,9 +6,9 @@ import org.springframework.data.domain.Pageable;
 import com.example.hospitalstocks.Entities.Drug;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import java.util.UUID;
 
-public interface DrugRepository extends JpaRepository<Drug, Long> {
+public interface DrugRepository extends JpaRepository<Drug, UUID> {
     Page<Drug> findAll(Pageable pageable);
     Page<Drug> findByNameContainingIgnoreCase(String name, Pageable pageable);
 }
