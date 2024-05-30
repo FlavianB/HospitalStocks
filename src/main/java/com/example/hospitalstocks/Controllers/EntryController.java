@@ -3,6 +3,7 @@ package com.example.hospitalstocks.Controllers;
 import com.example.hospitalstocks.Entities.Entry;
 import com.example.hospitalstocks.Services.EntryService;
 import com.example.hospitalstocks.Services.PDFService;
+import org.springframework.cglib.core.Local;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -29,15 +31,27 @@ public class EntryController {
     }
 
     @GetMapping("")
-    public String getAllEntries( @RequestParam(defaultValue = "date") String sortBy,
-                                 @RequestParam(defaultValue = "0") int page,
-                                 Model model) {
+    public String getAllEntries(@RequestParam(defaultValue = "date") String sortBy,
+                                @RequestParam(defaultValue = "0") int page,
+                                @RequestParam(required = false) String startDate,
+                                @RequestParam(required = false) String endDate,
+                                Model model) {
         int pageSize = 30;  // Number of items per page
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by(sortBy).descending());
-        Page<Entry> entryPage = entryService.getAllEntries(pageable);
+
+        Page<Entry> entryPage;
+        if (startDate != null && endDate != null) {
+            LocalDate start = startDate.isEmpty() ? LocalDate.parse("1900-12-12") : LocalDate.parse(startDate);
+            LocalDate end = endDate.isEmpty() ? LocalDate.parse("3000-12-12") : LocalDate.parse(endDate);
+            entryPage = entryService.getAllEntriesByDateRange(start, end, pageable);
+        } else {
+            entryPage = entryService.getAllEntries(pageable);
+        }
 
         model.addAttribute("entryPage", entryPage);
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
         return "entry-list"; // Refers to the Thymeleaf template 'entry-list.html'
     }
 

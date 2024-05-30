@@ -5,26 +5,34 @@ import com.example.hospitalstocks.Repositories.EntryRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.time.LocalDate;
 
 @Service
+@Transactional
 public class EntryService {
+
     private final EntryRepository entryRepository;
+
     public EntryService(EntryRepository entryRepository) {
         this.entryRepository = entryRepository;
     }
 
-    public Entry saveEntry(Entry entry) {
-        return entryRepository.save(entry);
+    public Page<Entry> getAllEntries(Pageable pageable) {
+        return entryRepository.findAll(pageable);
     }
 
-    public Page<Entry> getAllEntries(Pageable pageable) {
-        return  entryRepository.findAll(pageable);
+    public Page<Entry> getAllEntriesByDateRange(LocalDate startDate, LocalDate endDate, Pageable pageable) {
+        return entryRepository.findAllByDateBetween(startDate, endDate, pageable);
     }
 
     public Entry getEntryById(Long id) {
         return entryRepository.findById(id).orElse(null);
     }
-    // Other CRUD operations
+
+    public void saveEntry(Entry entry) {
+        entryRepository.save(entry);
+    }
 }
+
