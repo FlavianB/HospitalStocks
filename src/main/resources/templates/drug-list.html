@@ -47,6 +47,12 @@
                 <option th:value="'manufacturer'" th:selected="${sortBy == 'manufacturer'}">
                     Manufacturer
                 </option>
+                <option th:value="mainComponent" th:selected="${sortBy == 'mainComponent'}">
+                    Main Component
+                </option>
+                <option th:value="secondaryComponent" th:selected="${sortBy == 'secondaryComponent'}">
+                    Secondary Component
+                </option>
             </select>
         </div>
         <div class="form-group">
@@ -62,26 +68,51 @@
             <th>Name</th>
             <th>Description</th>
             <th>Manufacturer</th>
+            <th>Main Component</th>
+            <th>Secondary Component</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="drug : ${drugs}">
+        <tr th:each="drug : ${drugPage.getContent()}">
             <td th:text="${drug.id}"></td>
             <td th:text="${drug.name}"></td>
             <td th:text="${drug.description}"></td>
             <td th:text="${drug.manufacturer}"></td>
+            <td th:text="${drug.mainComponent}"></td>
+            <td th:text="${drug.secondaryComponent}"></td>
             <td>
                 <a th:href="@{/drug-list/{id}(id=${drug.id})}" class="btn btn-crimson">View Details</a>
             </td>
         </tr>
         </tbody>
     </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!drugPage.hasPrevious()} ? 'disabled'">
+                <a class="page-link" th:href="@{/drug-list(page=${drugPage.number - 1}, size=${drugPage.size}, sortBy=${sortBy}, name=${name})}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item active">
+                <span class="page-link" th:text="${drugPage.number + 1}">1</span>
+            </li>
+            <li class="page-item" th:classappend="${!drugPage.hasNext()} ? 'disabled'">
+                <a class="page-link" th:href="@{/drug-list(page=${drugPage.number + 1}, size=${drugPage.size}, sortBy=${sortBy}, name=${name})}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </main>
 <footer class="bg-dark text-white text-center py-3 w-100">
     <div class="container">
         <p>&copy; Hospital Stock Management System</p>
     </div>
 </footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

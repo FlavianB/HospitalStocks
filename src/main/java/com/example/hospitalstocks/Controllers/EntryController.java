@@ -7,6 +7,7 @@ import com.example.hospitalstocks.Services.DrugService;
 import com.example.hospitalstocks.Services.PDFService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -35,9 +36,7 @@ public class EntryController {
     @GetMapping("")
     public String getAllEntries(Model model) {
         List<Entry> entries = entryService.getAllEntries();
-        List<Drug> drugs = drugService.getAllDrugs("id", "");
         model.addAttribute("entries", entries);
-        model.addAttribute("drugs", drugs);
         return "entry-list"; // Refers to the Thymeleaf template 'entry-list.html'
     }
 
@@ -51,8 +50,6 @@ public class EntryController {
     @GetMapping("/add")
     public String addEntryForm(Model model) {
         model.addAttribute("entry", new Entry());
-        List<Drug> drugs = drugService.getAllDrugs("id", "");
-        model.addAttribute("drugs", drugs);
         return "add-entry"; // Refers to the Thymeleaf template 'add-entry.html'
     }
 
