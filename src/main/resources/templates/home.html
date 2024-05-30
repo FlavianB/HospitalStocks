@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pharmacy Management System</title>
+    <title>Hospital Management System</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/3811cdfa76.js" crossorigin="anonymous"></script>
     <style>
@@ -19,15 +19,15 @@
     </style>
 </head>
 <body class="d-flex flex-column align-items-center justify-content-space-between min-vh-100">
-<header class="bg-danger text-white py-4 px-2 w-100 d-flex justify-content-between align-items-center">
-    <h3>Pharmacy Management System</h3>
+<header class="bg-danger text-white p-4 w-100 d-flex justify-content-between align-items-center">
+    <h3>Hospital Management System</h3>
     <div>
         <a href="/" class="btn btn-header"><i class="fa-solid fa-house"></i></a>
         <a href="/perform_logout" class="btn btn-header"><i class="fa-solid fa-right-from-bracket"></i></a>
     </div>
 </header>
 <main class="d-flex w-100 flex-grow-1 flex-column align-items-center">
-    <h2 class="text-center mt-4">Welcome to the Pharmacy Management System</h2>
+    <h2 class="text-center mt-4">Welcome to the Hospital Management System</h2>
     <div class="container">
         <div class="row mt-3 gap">
             <div class="col-md-4">
@@ -36,7 +36,7 @@
                         <h5 class="m-0">Drug List</h5>
                     </div>
                     <div class="card-body d-flex flex-column justify-content-between">
-                        <p class="card-text">View and manage the list of drugs available in the pharmacy.</p>
+                        <p class="card-text">View and manage the list of drugs available in the hospital.</p>
                         <a href="/drug-list" class="btn btn-danger">Go to Drug List</a>
                     </div>
                 </div>
@@ -47,29 +47,27 @@
                         <h5 class="m-0">Add New Drug</h5>
                     </div>
                     <div class="card-body d-flex flex-column justify-content-between">
-                        <p class="card-text">Add a new drug to the pharmacy inventory.</p>
+                        <p class="card-text">Add a new drug to the hospital inventory.</p>
                         <a href="/drug-list/add" class="btn btn-danger">Add Drug</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card"  style="min-height: 200px;">
+                <div class="card" style="min-height: 200px;">
                     <div class="card-header">
-                        <h5 class="m-0">Manage Inventory</h5>
+                        <h5 class="m-0">View Entries</h5>
                     </div>
                     <div class="card-body d-flex flex-column justify-content-between">
-                        <p class="card-text">Update and manage the pharmacy inventory.</p>
-                        <a href="/manage-inventory" class="btn btn-danger">Manage Inventory</a>
+                        <p class="card-text"></p>
+                        <a href="/entries" class="btn btn-danger">Manage Inventory</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
-<footer class="bg-dark text-white text-center py-3 w-100">
-    <div class="container">
-        <p>&copy; Hospital Stock Management System</p>
-    </div>
+<footer class="bg-dark text-white py-3 w-100 d-flex align-items-center justify-content-center">
+    <p class="m-0">&copy; Hospital Stock Management System</p>
 </footer>
 </body>
 </html>
