@@ -5,14 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pharmacy Management System</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/3811cdfa76.js" crossorigin="anonymous"></script>
+    <style>
+        .btn-header {
+            background-color: transparent;
+            color: white;
+        }
+
+        .btn-header:hover {
+            background-color: transparent;
+            color: #e7e7e7;
+        }
+    </style>
 </head>
 <body class="d-flex flex-column align-items-center justify-content-space-between min-vh-100">
-<header class="bg-danger text-white py-4 w-100">
-    <div class="container header-buttons">
-        <a href="/signup" class="btn btn-light">Sign Up</a>
-        <a href="/perform_logout" class="btn btn-light">Log Out</a>
+<header class="bg-danger text-white py-4 px-2 w-100 d-flex justify-content-between align-items-center">
+    <h3>Pharmacy Management System</h3>
+    <div>
+        <a href="/" class="btn btn-header"><i class="fa-solid fa-house"></i></a>
+        <a href="/perform_logout" class="btn btn-header"><i class="fa-solid fa-right-from-bracket"></i></a>
     </div>
-    <h1 class="text-center">Pharmacy Management System</h1>
 </header>
 <main class="d-flex w-100 flex-grow-1 flex-column align-items-center">
     <h2 class="text-center mt-4">Welcome to the Pharmacy Management System</h2>
