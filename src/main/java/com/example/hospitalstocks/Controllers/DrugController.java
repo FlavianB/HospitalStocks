@@ -27,7 +27,7 @@ public class DrugController {
                               Model model) {
         int pageSize = 30;  // Number of items per page
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by(sortBy));
-        Page<Drug> drugPage= drugService.getAllDrugs(sortBy, name, pageable);
+        Page<Drug> drugPage= drugService.getAllDrugs(name, pageable);
 
         model.addAttribute("drugPage", drugPage);
         model.addAttribute("sortBy", sortBy);

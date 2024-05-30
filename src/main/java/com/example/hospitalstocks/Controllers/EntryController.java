@@ -1,14 +1,13 @@
 package com.example.hospitalstocks.Controllers;
 
 import com.example.hospitalstocks.Entities.Entry;
-import com.example.hospitalstocks.Entities.Drug;
 import com.example.hospitalstocks.Services.EntryService;
-import com.example.hospitalstocks.Services.DrugService;
 import com.example.hospitalstocks.Services.PDFService;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,27 +15,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 @Controller
 @RequestMapping("/entries")
 public class EntryController {
     private final EntryService entryService;
-    private final DrugService drugService;
     private final PDFService pdfService;
 
-    public EntryController(EntryService entryService, DrugService drugService, PDFService pdfService) {
+    public EntryController(EntryService entryService, PDFService pdfService) {
         this.entryService = entryService;
-        this.drugService = drugService;
         this.pdfService = pdfService;
     }
 
     @GetMapping("")
-    public String getAllEntries(Model model) {
-        List<Entry> entries = entryService.getAllEntries();
-        model.addAttribute("entries", entries);
+    public String getAllEntries( @RequestParam(defaultValue = "date") String sortBy,
+                                 @RequestParam(defaultValue = "0") int page,
+                                 Model model) {
+        int pageSize = 30;  // Number of items per page
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(sortBy).descending());
+        Page<Entry> entryPage = entryService.getAllEntries(pageable);
+
+        model.addAttribute("entryPage", entryPage);
+        model.addAttribute("sortBy", sortBy);
         return "entry-list"; // Refers to the Thymeleaf template 'entry-list.html'
     }
 
