@@ -2,11 +2,14 @@ package com.example.hospitalstocks.Controllers;
 
 import com.example.hospitalstocks.Entities.Drug;
 import com.example.hospitalstocks.Services.DrugService;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/drug-list")
@@ -18,9 +21,15 @@ public class DrugController {
     }
 
     @GetMapping("")
-    public String getAllDrugs(@RequestParam(defaultValue = "id") String sortBy, @RequestParam(defaultValue = "") String name, Model model) {
-        List<Drug> drugs = drugService.getAllDrugs(sortBy, name);
-        model.addAttribute("drugs", drugs);
+    public String getAllDrugs(@RequestParam(defaultValue = "id") String sortBy,
+                              @RequestParam(defaultValue = "") String name,
+                              @RequestParam(defaultValue = "0") int page,
+                              Model model) {
+        int pageSize = 30;  // Number of items per page
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(sortBy));
+        Page<Drug> drugPage= drugService.getAllDrugs(sortBy, name, pageable);
+
+        model.addAttribute("drugPage", drugPage);
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("name", name);
         return "drug-list"; // Refers to the Thymeleaf template 'drug-list.html'
@@ -52,4 +61,5 @@ public class DrugController {
         return "redirect:/drug-list";
     }
 }
+
 

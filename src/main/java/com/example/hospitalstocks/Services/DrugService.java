@@ -1,5 +1,8 @@
 package com.example.hospitalstocks.Services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import com.example.hospitalstocks.Entities.Drug;
 import com.example.hospitalstocks.Repositories.DrugRepository;
 import org.springframework.stereotype.Service;
@@ -15,38 +18,44 @@ public class DrugService {
         this.drugRepository = drugRepository;
     }
 
-    public List<Drug> getAllDrugs(String sortBy, String name) {
-        if (name.isEmpty()) {
-            List<Drug> drugs = drugRepository.findAll();
-            switch (sortBy) {
-                case "name" -> drugs.sort(Comparator.comparing(Drug::getName));
-                case "manufacturer" -> drugs.sort(Comparator.comparing(Drug::getManufacturer));
-                case "description" -> drugs.sort(Comparator.comparing(Drug::getDescription));
-                default -> drugs.sort(Comparator.comparing(Drug::getId));
-            }
-            return drugs;
-        }
-        final String processedName = name.trim().toLowerCase();
-        List<Drug> drugs = drugRepository.findAll();
-        drugs = drugs.stream().filter(drug -> drug.getName().toLowerCase().contains(processedName)).collect(Collectors.toCollection(ArrayList::new));
+    public Page<Drug> getAllDrugs(String sortBy, String name, Pageable pageable) {
+        Page<Drug> drugsPage = name.isEmpty() ?
+                drugRepository.findAll(pageable) :
+                drugRepository.findByNameContainingIgnoreCase(name, pageable);
+        return drugsPage;
+    }
+
+    private void sortDrugs(List<Drug> drugs, String sortBy) {
+        Comparator<Drug> comparator;
         switch (sortBy) {
-            case "name" -> drugs.sort(Comparator.comparing(Drug::getName));
-            case "manufacturer" -> drugs.sort(Comparator.comparing(Drug::getManufacturer));
-            case "description" -> drugs.sort(Comparator.comparing(Drug::getDescription));
-            default -> drugs.sort(Comparator.comparing(Drug::getId));
+            case "name":
+                comparator = Comparator.comparing(Drug::getName);
+                break;
+            case "manufacturer":
+                comparator = Comparator.comparing(Drug::getManufacturer);
+                break;
+            case "description":
+                comparator = Comparator.comparing(Drug::getDescription);
+                break;
+            case "mainComponent":
+                comparator = Comparator.comparing(Drug::getMainComponent);
+                break;
+            case "secondaryComponent":
+                comparator = Comparator.comparing(Drug::getSecondaryComponent);
+                break;
+            default:
+                comparator = Comparator.comparing(Drug::getId);
         }
-        return drugs;
+        drugs.sort(comparator);
     }
 
     public Drug saveDrug(Drug drug) {
         drug.setName(drug.getName().trim());
         drug.setManufacturer(drug.getManufacturer().trim());
         drug.setDescription(drug.getDescription().trim());
+        drug.setMainComponent(drug.getMainComponent().trim());
+        drug.setSecondaryComponent(drug.getSecondaryComponent().trim());
         return drugRepository.save(drug);
-    }
-
-    public Drug getDrugByName(String name) {
-        return drugRepository.findByName(name);
     }
 
     public Drug getDrugById(Long id) {

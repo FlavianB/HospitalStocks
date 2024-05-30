@@ -17,6 +17,8 @@ public class Drug {
     private String name;
     private String description;
     private String manufacturer;
+    private String mainComponent;
+    private String secondaryComponent;
 
     @ManyToMany
     @JoinTable(
