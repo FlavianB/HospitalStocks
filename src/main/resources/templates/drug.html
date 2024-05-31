@@ -37,7 +37,7 @@
         <div class="card-body">
             <p><strong>ID:</strong> <span th:text="${drug.id}">1</span></p>
             <p><strong>Name:</strong> <span th:text="${drug.name}">Paracetamol</span></p>
-            <p th:if="${drug.description != ''}"><strong> <span th:text="${drug.description}">Pain relief</span></p>
+            <p th:if="${drug.description != ''}"><strong>Description</strong> <span th:text="${drug.description}">Pain relief</span></p>
             <p><strong>Manufacturer:</strong> <span th:text="${drug.manufacturer}">Pharma Inc.</span></p>
             <p><strong>Main Component:</strong> <span th:text="${drug.mainComponent}">Paracetamol</span></p>
             <p th:if="${drug.secondaryComponent != ''}"><strong>Secondary Component:</strong> <span th:text="${drug.secondaryComponent}">Paracetamol</span></p>
