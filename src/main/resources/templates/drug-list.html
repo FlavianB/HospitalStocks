@@ -45,7 +45,7 @@
         <div class="form-group m-0">
             <label for="sort" class="d-none">Sort by</label>
             <select id="sort" class="form-control"
-                    onchange="location = '/drug-list?sortBy=' + this.value + '&name=' + document.getElementById('name').value;">
+                    onchange="location = '/drugs?sortBy=' + this.value + '&name=' + document.getElementById('name').value;">
                 <option th:value="''" th:selected="${sortBy == ''}">
                     Sort by...
                 </option>
@@ -72,7 +72,7 @@
         <div class="form-group m-0">
             <label for="name" class="d-none">Search</label>
             <input type="text" id="name" name="name" class="form-control" placeholder="Search" th:value="${name}"
-                   onchange="location = '/drug-list?sortBy=' + document.getElementById('sort').value + '&name=' + this.value;">
+                   onchange="location = '/drugs?sortBy=' + document.getElementById('sort').value + '&name=' + this.value;">
         </div>
     </form>
     <table class="table table-bordered table-striped">
@@ -96,7 +96,7 @@
             <td th:text="${drug.mainComponent}"></td>
             <td th:text="${drug.secondaryComponent}"></td>
             <td>
-                <a th:href="@{/drug-list/{id}(id=${drug.id})}" class="btn btn-crimson">View Details</a>
+                <a th:href="@{/drugs/{id}(id=${drug.id})}" class="btn btn-crimson">View Details</a>
             </td>
         </tr>
         </tbody>
@@ -106,7 +106,7 @@
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${!drugPage.hasPrevious()} ? 'disabled'">
                 <a class="page-link"
-                   th:href="@{/drug-list(page=${drugPage.number - 1}, size=${drugPage.size}, sortBy=${sortBy}, name=${name})}"
+                   th:href="@{/drugs(page=${drugPage.number - 1}, size=${drugPage.size}, sortBy=${sortBy}, name=${name})}"
                    aria-label="Previous">
                     <span aria-hidden="true" th:classappend="${drugPage.hasPrevious()} ? 'text-danger'">&laquo;</span>
                 </a>
@@ -116,7 +116,7 @@
             </li>
             <li class="page-item" th:classappend="${!drugPage.hasNext()} ? 'disabled'">
                 <a class="page-link"
-                   th:href="@{/drug-list(page=${drugPage.number + 1}, size=${drugPage.size}, sortBy=${sortBy}, name=${name})}"
+                   th:href="@{/drugs(page=${drugPage.number + 1}, size=${drugPage.size}, sortBy=${sortBy}, name=${name})}"
                    aria-label="Next">
                     <span aria-hidden="true" th:classappend="${drugPage.hasNext()} ? 'text-danger'">&raquo;</span>
                 </a>

@@ -38,7 +38,7 @@
     <h2 class="text-center mt-4">Add New Drug</h2>
     <div class="container card">
         <div class="card-body">
-            <form class="container" th:action="@{/drug-list/add}" th:object="${drug}" method="post">
+            <form class="container" th:action="@{/drugs/add}" th:object="${drug}" method="post">
                 <div class="form-group">
                     <label for="name" class="d-none">Name</label>
                     <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Name"/>
@@ -70,7 +70,7 @@
             </form>
         </div>
         <div class="card-footer">
-            <a th:href="@{/drug-list}" class="btn btn-secondary">Back to Drug List</a>
+            <a th:href="@{/drugs}" class="btn btn-secondary">Back to Drug List</a>
         </div>
     </div>
 </main>

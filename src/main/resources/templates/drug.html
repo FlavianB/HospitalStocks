@@ -43,7 +43,7 @@
             <p th:if="${drug.secondaryComponent != ''}"><strong>Secondary Component:</strong> <span th:text="${drug.secondaryComponent}">Paracetamol</span></p>
             <p><strong>Suppliers:</strong> <span th:each="supplier : ${drug.suppliers}"><span th:text="${supplier.name}">Paracetamol</span></span></p>
         </div>
-        <a th:href="@{/drug-list}" class="btn btn-danger">Back to Drug List</a>
+        <a th:href="@{/drugs}" class="btn btn-danger">Back to Drug List</a>
     </div>
 </main>
 <footer class="bg-dark text-white py-3 w-100 d-flex align-items-center justify-content-center">

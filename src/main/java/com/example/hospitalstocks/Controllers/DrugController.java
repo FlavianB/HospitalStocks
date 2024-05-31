@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/drug-list")
+@RequestMapping("/drugs")
 public class DrugController {
     private final DrugService drugService;
 
@@ -53,14 +53,14 @@ public class DrugController {
     @PostMapping("/add")
     public String addDrug(@ModelAttribute Drug drug) {
         drugService.saveDrug(drug);
-        return "redirect:/drug-list";
+        return "redirect:/drugs";
     }
 
     @PutMapping("/{id}")
     public String updateDrug(@PathVariable UUID id, @ModelAttribute Drug drug) {
         drug.setId(id);
         drugService.saveDrug(drug);
-        return "redirect:/drug-list";
+        return "redirect:/drugs";
     }
 }
 
