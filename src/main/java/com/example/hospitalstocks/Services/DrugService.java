@@ -18,7 +18,7 @@ public class DrugService {
     public Page<Drug> getAllDrugs(String name, Pageable pageable) {
         Page<Drug> drugsPage = name.isEmpty() ?
                 drugRepository.findAll(pageable) :
-                drugRepository.findByNameContainingIgnoreCase(name, pageable);
+                drugRepository.findByNameContainingIgnoreCaseOrMainComponentContainingIgnoreCase(name, name, pageable);
         return drugsPage;
     }
 
