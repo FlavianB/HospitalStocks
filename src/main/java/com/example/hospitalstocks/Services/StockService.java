@@ -25,8 +25,8 @@ public class StockService {
         return stockRepository.save(stock);
     }
 
-    public Page<Stock> getAllStocksByDateRange(LocalDate start, LocalDate end, Pageable pageable) {
-        return stockRepository.findAllByDateBetween(start, end, pageable);
+    public Page<Stock> getAllStocksByExpiryDateRange(LocalDate start, LocalDate end, Pageable pageable) {
+        return stockRepository.findAllByExpiryDateBetween(start, end, pageable);
     }
 
     public Stock getStockById(UUID id) {

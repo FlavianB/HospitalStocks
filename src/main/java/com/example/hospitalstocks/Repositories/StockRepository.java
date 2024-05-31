@@ -10,5 +10,5 @@ import java.util.UUID;
 
 public interface StockRepository extends JpaRepository<Stock, UUID> {
     Page<Stock> findAll(Pageable pageable);
-    Page<Stock> findAllByDateBetween(LocalDate start, LocalDate end, Pageable pageable);
+    Page<Stock> findAllByExpiryDateBetween(LocalDate start, LocalDate end, Pageable pageable);
 }

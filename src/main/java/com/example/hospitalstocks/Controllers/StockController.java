@@ -32,7 +32,7 @@ public class StockController {
     }
 
     @GetMapping("")
-    public String getAllStocks(@RequestParam(defaultValue = "date") String sortBy,
+    public String getAllStocks(@RequestParam(defaultValue = "expiryDate") String sortBy,
                                 @RequestParam(defaultValue = "0") int page,
                                 @RequestParam(required = false) String startDate,
                                 @RequestParam(required = false) String endDate,
@@ -44,7 +44,7 @@ public class StockController {
         if (startDate != null && endDate != null) {
             LocalDate start = startDate.isEmpty() ? LocalDate.parse("1900-12-12") : LocalDate.parse(startDate);
             LocalDate end = endDate.isEmpty() ? LocalDate.parse("3000-12-12") : LocalDate.parse(endDate);
-            stockPage = stockService.getAllStocksByDateRange(start, end, pageable);
+            stockPage = stockService.getAllStocksByExpiryDateRange(start, end, pageable);
         } else {
             stockPage = stockService.getAllStocks(pageable);
         }
