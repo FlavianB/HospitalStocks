@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/3811cdfa76.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <style>
         .btn-header {
             background-color: transparent;
@@ -33,8 +36,7 @@
         <a href="/perform_logout" class="btn btn-header"><i class="fa-solid fa-right-from-bracket"></i></a>
     </div>
 </header>
-<main class="d-flex w-100 flex-grow-1 flex-column align-items-center justify-content-start"
-      style="gap: 20px;">
+<main class="d-flex w-100 flex-grow-1 flex-column align-items-center justify-content-start" style="gap: 20px;">
     <h2 class="text-center mt-4">Add New Drug</h2>
     <div class="container card">
         <div class="card-body">
@@ -45,31 +47,28 @@
                 </div>
                 <div class="form-group">
                     <label for="description" class="d-none">Description</label>
-                    <textarea id="description" th:field="*{description}" class="form-control"
-                              placeholder="Description"></textarea>
+                    <textarea id="description" th:field="*{description}" class="form-control" placeholder="Description"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="manufacturer" class="d-none">Manufacturer</label>
-                    <input type="text" id="manufacturer" th:field="*{manufacturer}" class="form-control"
-                           placeholder="Manufacturer"/>
+                    <input type="text" id="manufacturer" th:field="*{manufacturer}" class="form-control" placeholder="Manufacturer"/>
                 </div>
                 <div class="form-group">
                     <label for="main-component" class="d-none">Main Component</label>
-                    <input type="text" id="main-component" th:field="*{mainComponent}" class="form-control"
-                           placeholder="Main Component"/>
+                    <input type="text" id="main-component" th:field="*{mainComponent}" class="form-control" placeholder="Main Component"/>
                 </div>
                 <div class="form-group">
                     <label for="secondary-component" class="d-none">Secondary Component</label>
-                    <input type="text" id="secondary-component" th:field="*{secondaryComponent}" class="form-control"
-                           placeholder="Secondary Component"/>
+                    <input type="text" id="secondary-component" th:field="*{secondaryComponent}" class="form-control" placeholder="Secondary Component"/>
                 </div>
                 <div class="form-group">
-                    <label for="supplier">Supplier</label>
-                    <select id="supplier" th:field="*{suppliers}" class="form-control">
-                        <option th:each="supplier : ${suppliers}"
-                                th:value="${supplier.id}"
-                                th:text="${supplier.name}">Supplier Name</option>
-                    </select>
+                    <button type="button" class="btn btn-secondary mb-2" data-toggle="modal" data-target="#supplierModal">
+                        Select Suppliers
+                    </button>
+                    <ul id="selected-suppliers" class="list-group">
+                        <!-- Selected suppliers will be listed here -->
+                    </ul>
+                    <input type="hidden" id="supplier-ids" th:field="*{suppliers}" />
                 </div>
                 <div class="form-group m-0">
                     <button type="submit" class="btn btn-danger">Add Drug</button>
@@ -84,5 +83,72 @@
 <footer class="bg-dark text-white py-3 w-100 d-flex align-items-center justify-content-center">
     <p class="m-0">&copy; Hospital Stock Management System</p>
 </footer>
+
+<!-- Supplier Modal -->
+<div class="modal fade" id="supplierModal" tabindex="-1" role="dialog" aria-labelledby="supplierModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="supplierModalLabel">Select Suppliers</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" id="supplier-search" class="form-control" placeholder="Search Suppliers"/>
+                </div>
+                <ul id="supplier-list" class="list-group">
+                    <li class="list-group-item" th:each="supplier : ${suppliers}" th:data-id="${supplier.id}" th:text="${supplier.name}"></li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-danger" id="add-suppliers">Add Selected</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Search functionality
+        $("#supplier-search").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#supplier-list li").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        // Add selected suppliers to the list
+        $("#add-suppliers").on("click", function () {
+            var selectedSuppliers = [];
+            $("#supplier-list li.active").each(function () {
+                var supplierId = $(this).data("id");
+                var supplierName = $(this).text();
+                selectedSuppliers.push({ id: supplierId, name: supplierName });
+            });
+
+            // Update the selected suppliers list
+            var selectedList = $("#selected-suppliers");
+            selectedList.empty();
+            var supplierIds = [];
+            selectedSuppliers.forEach(function (supplier) {
+                selectedList.append('<li class="list-group-item" data-id="' + supplier.id + '">' + supplier.name + '</li>');
+                supplierIds.push(supplier.id);
+            });
+
+            // Update the hidden input with supplier IDs
+            $("#supplier-ids").val(supplierIds.join(","));
+
+            // Close the modal
+            $("#supplierModal").modal("hide");
+        });
+
+        // Toggle active class on list items
+        $("#supplier-list").on("click", "li", function () {
+            $(this).toggleClass("active");
+        });
+    });
+</script>
 </body>
 </html>
