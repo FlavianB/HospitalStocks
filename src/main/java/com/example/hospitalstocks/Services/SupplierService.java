@@ -20,5 +20,9 @@ public class SupplierService {
     public Supplier saveSupplier(Supplier supplier) {
         return supplierRepository.save(supplier);
     }
+
+    public List<Supplier> findAll() {
+        return supplierRepository.findAll();
+    }
     // Other CRUD operations
 }

@@ -1,8 +1,10 @@
 package com.example.hospitalstocks.Controllers;
 
 import com.example.hospitalstocks.Entities.Drug;
+import com.example.hospitalstocks.Entities.Supplier;
 import com.example.hospitalstocks.Services.DrugService;
 
+import com.example.hospitalstocks.Services.SupplierService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,15 +13,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
 @RequestMapping("/drugs")
 public class DrugController {
     private final DrugService drugService;
+    private final SupplierService supplierService;
 
-    public DrugController(DrugService drugService) {
+    public DrugController(DrugService drugService, SupplierService supplierService) {
         this.drugService = drugService;
+        this.supplierService = supplierService;
     }
 
     @GetMapping("")
@@ -45,9 +50,12 @@ public class DrugController {
     }
 
     @GetMapping("/add")
-    public String addDrugForm(Model model) {
-        model.addAttribute("drug", new Drug());
-        return "add-drug"; // Refers to the Thymeleaf template 'add-consumption.html'
+    public String showAddDrugForm(Model model) {
+        Drug drug = new Drug();
+        List<Supplier> suppliers = supplierService.findAll();
+        model.addAttribute("drug", drug);
+        model.addAttribute("suppliers", suppliers);
+        return "add-drug";
     }
 
     @PostMapping("/add")

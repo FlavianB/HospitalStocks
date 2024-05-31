@@ -46,7 +46,7 @@
                 <div class="form-group">
                     <label for="description" class="d-none">Description</label>
                     <textarea id="description" th:field="*{description}" class="form-control"
-                              placeholder="Description"/>
+                              placeholder="Description"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="manufacturer" class="d-none">Manufacturer</label>
@@ -54,16 +54,23 @@
                            placeholder="Manufacturer"/>
                 </div>
                 <div class="form-group">
-                    <label for="main-component" class="d-none">Manufacturer</label>
+                    <label for="main-component" class="d-none">Main Component</label>
                     <input type="text" id="main-component" th:field="*{mainComponent}" class="form-control"
                            placeholder="Main Component"/>
                 </div>
                 <div class="form-group">
-                    <label for="secondary-component" class="d-none">Manufacturer</label>
+                    <label for="secondary-component" class="d-none">Secondary Component</label>
                     <input type="text" id="secondary-component" th:field="*{secondaryComponent}" class="form-control"
                            placeholder="Secondary Component"/>
                 </div>
-                <!-- Add other fields as needed -->
+                <div class="form-group">
+                    <label for="supplier">Supplier</label>
+                    <select id="supplier" th:field="*{suppliers}" class="form-control">
+                        <option th:each="supplier : ${suppliers}"
+                                th:value="${supplier.id}"
+                                th:text="${supplier.name}">Supplier Name</option>
+                    </select>
+                </div>
                 <div class="form-group m-0">
                     <button type="submit" class="btn btn-danger">Add Drug</button>
                 </div>
