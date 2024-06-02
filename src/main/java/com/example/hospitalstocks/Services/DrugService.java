@@ -6,6 +6,7 @@ import com.example.hospitalstocks.Entities.Drug;
 import com.example.hospitalstocks.Repositories.DrugRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -33,6 +34,10 @@ public class DrugService {
 
     public Drug getDrugById(UUID id) {
         return drugRepository.findById(id).orElse(null);
+    }
+
+    public List<Drug> findByNameContainingIgnoreCase(String name) {
+        return drugRepository.findByNameContainingIgnoreCase(name, Pageable.unpaged()).getContent();
     }
     // Other CRUD operations
 }

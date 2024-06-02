@@ -1,13 +1,16 @@
 package com.example.hospitalstocks.Controllers;
 
+import com.example.hospitalstocks.Entities.Drug;
 import com.example.hospitalstocks.Entities.Entry;
+import com.example.hospitalstocks.Entities.Supplier;
+import com.example.hospitalstocks.Services.DrugService;
 import com.example.hospitalstocks.Services.EntryService;
 import com.example.hospitalstocks.Services.PDFService;
-import org.springframework.cglib.core.Local;
+import com.example.hospitalstocks.Services.SupplierService;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,10 +28,14 @@ import java.util.UUID;
 public class EntryController {
     private final EntryService entryService;
     private final PDFService pdfService;
+    private final DrugService drugService;
+    private final SupplierService supplierService;
 
-    public EntryController(EntryService entryService, PDFService pdfService) {
+    public EntryController(EntryService entryService, PDFService pdfService, DrugService drugService, SupplierService supplierService) {
         this.entryService = entryService;
         this.pdfService = pdfService;
+        this.drugService = drugService;
+        this.supplierService = supplierService;
     }
 
     @GetMapping("")
@@ -64,13 +71,27 @@ public class EntryController {
     }
 
     @GetMapping("/add")
-    public String addEntryForm(Model model) {
+    public String addEntryForm(@RequestParam(defaultValue = "0") int page,
+                               Model model) {
+        int pageSize = 10; // Number of items per page
+        //Pageable pageable = PageRequest.of(page, pageSize, Sort.by("name"));
+        //Page<Drug> drugPage = drugService.getAllDrugs("", pageable);
+        List<Supplier> suppliers = supplierService.getAllSuppliers();
+
         model.addAttribute("entry", new Entry());
+        //model.addAttribute("drugPage", drugPage);
+        model.addAttribute("suppliers", suppliers);
         return "add-entry"; // Refers to the Thymeleaf template 'add-entry.html'
     }
 
     @PostMapping("/add")
-    public String addEntry(@ModelAttribute Entry entry) {
+    public String addEntry(@ModelAttribute Entry entry, @RequestParam UUID drugId, @RequestParam UUID supplierId) {
+        Drug drug = drugService.getDrugById(drugId);
+        Supplier supplier = supplierService.getSupplierById(supplierId);
+
+        entry.setDrug(drug);
+        entry.setSupplier(supplier);
+
         entryService.saveEntry(entry);
         return "redirect:/entries";
     }

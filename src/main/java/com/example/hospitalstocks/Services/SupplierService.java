@@ -5,6 +5,7 @@ import com.example.hospitalstocks.Repositories.SupplierRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SupplierService {
@@ -23,6 +24,10 @@ public class SupplierService {
 
     public List<Supplier> findAll() {
         return supplierRepository.findAll();
+    }
+
+    public Supplier getSupplierById(UUID supplierId) {
+        return supplierRepository.findById(supplierId).orElse(null);
     }
     // Other CRUD operations
 }
