@@ -23,7 +23,7 @@
 </head>
 <body class="d-flex flex-column align-items-center justify-content-space-between min-vh-100">
 <header class="bg-danger text-white p-4 w-100 d-flex justify-content-between align-items-center">
-    <h3 style="font-family: Montserrat, sans-serif; font-weight: 800;">MedStock</h3>
+    <a href = "/" style="text-decoration: none; color: white;"><h3 style="font-family: Montserrat, sans-serif; font-weight: 800;">MedStock</h3></a>
     <div>
         <a href="/" class="btn btn-header"><i class="fa-solid fa-house"></i></a>
         <a href="/perform_logout" class="btn btn-header"><i class="fa-solid fa-right-from-bracket"></i></a>
@@ -41,7 +41,7 @@
             <p><strong>Manufacturer:</strong> <span th:text="${drug.manufacturer}">Pharma Inc.</span></p>
             <p><strong>Main Component:</strong> <span th:text="${drug.mainComponent}">Paracetamol</span></p>
             <p th:if="${drug.secondaryComponent != ''}"><strong>Secondary Component:</strong> <span th:text="${drug.secondaryComponent}">Paracetamol</span></p>
-            <p><strong>Suppliers:</strong> <span th:each="supplier : ${drug.suppliers}"><span th:text="${supplier.name}">Paracetamol</span></span></p>
+            <p th:if="${drug.suppliers != null}"><strong>Suppliers:</strong> <span th:each="supplier : ${drug.suppliers}"><span th:text="${supplier.name}">Paracetamol</span></span></p>
         </div>
         <a th:href="@{/drugs}" class="btn btn-danger">Back to Drug List</a>
     </div>

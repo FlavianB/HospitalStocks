@@ -28,7 +28,7 @@ public class DrugController {
     }
 
     @GetMapping("")
-    public String getAllDrugs(@RequestParam(defaultValue = "id") String sortBy,
+    public String getAllDrugs(@RequestParam(defaultValue = "name") String sortBy,
                               @RequestParam(defaultValue = "") String name,
                               @RequestParam(defaultValue = "0") int page,
                               Model model) {
