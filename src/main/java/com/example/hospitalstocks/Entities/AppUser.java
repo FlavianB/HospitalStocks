@@ -20,7 +20,4 @@ public class AppUser {
     private String username;
     private String password;
     private String role;
-
-    @OneToMany(mappedBy = "user")
-    private List<Consumption> consumptions;
 }

@@ -21,4 +21,7 @@ public class Supplier {
 
     @ManyToMany(mappedBy = "suppliers")
     private List<Drug> drugs;
+
+    @OneToMany(mappedBy = "supplier")
+    private List<Entry> entries;
 }

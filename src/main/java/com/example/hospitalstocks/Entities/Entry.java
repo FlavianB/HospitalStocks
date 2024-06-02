@@ -20,4 +20,8 @@ public class Entry {
     @ManyToOne
     @JoinColumn(name = "drug_id")
     private Drug drug;
+
+    @ManyToOne
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
 }

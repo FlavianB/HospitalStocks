@@ -23,6 +23,6 @@ public class Consumption {
     private Drug drug;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private AppUser user;
+    @JoinColumn(name = "stock_id")
+    private Stock stock;
 }
