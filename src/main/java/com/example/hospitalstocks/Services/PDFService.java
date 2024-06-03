@@ -49,6 +49,7 @@ public class PDFService {
             addTableRow(table, "Date", entry.getDate().toString());
             addTableRow(table, "Quantity", entry.getQuantity().toString());
             addTableRow(table, "Drug", entry.getDrug().getName());
+            addTableRow(table, "Supplier", entry.getSupplier().getName());
 
             document.add(table);
 
