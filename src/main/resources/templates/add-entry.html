@@ -53,7 +53,7 @@
                 </div>
                 <div class="form-group">
                     <label for="drug" class="d-none">Drug</label>
-                    <button type="button" id = "drug" class="btn btn-secondary mb-2" data-toggle="modal" data-target="#drugModal">
+                    <button type="button" id="drug" class="btn btn-secondary mb-2" data-toggle="modal" data-target="#drugModal">
                         Select Drug
                     </button>
                     <input type="hidden" id="selected-drug" th:field="*{drug.id}" />
@@ -61,6 +61,7 @@
                 <div class="form-group">
                     <label for="supplier" class="d-none">Supplier</label>
                     <select id="supplier" name="supplierId" class="form-control">
+                        <option value="">Select Supplier</option>
                         <option th:each="supplier : ${suppliers}" th:value="${supplier.id}" th:text="${supplier.name}"></option>
                     </select>
                 </div>
@@ -93,17 +94,92 @@
                     <div class="form-group">
                         <input type="text" id="drugSearchInput" class="form-control" placeholder="Search Drugs"/>
                     </div>
-                    <ul id="drugList" class="list-group">
-                        <!-- Drug search results will be displayed here -->
-                    </ul>
+                    <button type="submit" class="btn btn-primary">Search</button>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <!-- Add your modal footer content here -->
+                <ul id="drugList" class="list-group mt-3">
+                    <!-- Drug search results will be appended here -->
+                </ul>
+                <nav aria-label="Drug pagination">
+                    <ul class="pagination justify-content-center mt-3">
+                        <li class="page-item"><a class="page-link" href="#" data-page="0">First</a></li>
+                        <li class="page-item"><a class="page-link" href="#" id="prevPageLink">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#" id="nextPageLink">Next</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        let currentPage = 0;
+        let pageSize = 10; // Adjust page size as needed
+
+        function loadDrugs(page) {
+            var searchTerm = $('#drugSearchInput').val();
+            var url = '/drugs/api?name=' + encodeURIComponent(searchTerm) + '&page=' + page + '&size=' + pageSize;
+            $.get(url, function (data) {
+                console.log(data); // Log the returned data to help debug
+
+                $('#drugList').empty(); // Clear previous search results
+
+                if (data.content) {
+                    data.content.forEach(function (drug) {
+                        $('#drugList').append('<li class="list-group-item" data-id="' + drug.id + '">' + drug.name + '</li>');
+                    });
+                }
+
+                if (data.page) {
+                    currentPage = data.page.number;
+                    $('#prevPageLink').data('page', currentPage - 1);
+                    $('#nextPageLink').data('page', currentPage + 1);
+                } else {
+                    $('#prevPageLink').data('page', 0);
+                    $('#nextPageLink').data('page', 0);
+                }
+
+                if (data.page && data.page.totalPages) {
+                    if (currentPage === 0) {
+                        $('#prevPageLink').parent().addClass('disabled');
+                    } else {
+                        $('#prevPageLink').parent().removeClass('disabled');
+                    }
+
+                    if (currentPage >= data.page.totalPages - 1) {
+                        $('#nextPageLink').parent().addClass('disabled');
+                    } else {
+                        $('#nextPageLink').parent().removeClass('disabled');
+                    }
+                }
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.error("Failed to load drugs:", textStatus, errorThrown);
+            });
+        }
+
+        $('#drugSearchForm').submit(function (event) {
+            event.preventDefault();
+            loadDrugs(0);
+        });
+
+        $('#drugList').on('click', '.list-group-item', function () {
+            var drugId = $(this).data('id');
+            var drugName = $(this).text();
+            $('#selected-drug').val(drugId);
+            $('#drugModal').modal('hide');
+            console.log('Selected drug: ' + drugName);
+        });
+
+        $('.pagination').on('click', '.page-link', function (event) {
+            event.preventDefault();
+            var page = $(this).data('page');
+            if (page >= 0) {
+                loadDrugs(page);
+            }
+        });
+    });
+</script>
+
 
 </body>
 </html>

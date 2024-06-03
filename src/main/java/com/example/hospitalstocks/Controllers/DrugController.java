@@ -42,6 +42,13 @@ public class DrugController {
         return "drug-list"; // Refers to the Thymeleaf template 'drug-list.html'
     }
 
+    @GetMapping("/api")
+    @ResponseBody
+    public Page<Drug> getAllDrugs(@RequestParam String name, @RequestParam int page, @RequestParam int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return drugService.getAllDrugs(name, pageable);
+    }
+
     @GetMapping("/{id}")
     public String getDrug(@PathVariable UUID id, Model model) {
         Drug drug = drugService.getDrugById(id);

@@ -71,27 +71,16 @@ public class EntryController {
     }
 
     @GetMapping("/add")
-    public String addEntryForm(@RequestParam(defaultValue = "0") int page,
-                               Model model) {
-        int pageSize = 10; // Number of items per page
-        //Pageable pageable = PageRequest.of(page, pageSize, Sort.by("name"));
-        //Page<Drug> drugPage = drugService.getAllDrugs("", pageable);
+    public String addEntryForm(Model model) {
         List<Supplier> suppliers = supplierService.getAllSuppliers();
 
         model.addAttribute("entry", new Entry());
-        //model.addAttribute("drugPage", drugPage);
         model.addAttribute("suppliers", suppliers);
         return "add-entry"; // Refers to the Thymeleaf template 'add-entry.html'
     }
 
     @PostMapping("/add")
-    public String addEntry(@ModelAttribute Entry entry, @RequestParam UUID drugId, @RequestParam UUID supplierId) {
-        Drug drug = drugService.getDrugById(drugId);
-        Supplier supplier = supplierService.getSupplierById(supplierId);
-
-        entry.setDrug(drug);
-        entry.setSupplier(supplier);
-
+    public String addEntry(@ModelAttribute Entry entry) {
         entryService.saveEntry(entry);
         return "redirect:/entries";
     }

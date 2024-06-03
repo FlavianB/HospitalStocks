@@ -35,9 +35,5 @@ public class DrugService {
     public Drug getDrugById(UUID id) {
         return drugRepository.findById(id).orElse(null);
     }
-
-    public List<Drug> findByNameContainingIgnoreCase(String name) {
-        return drugRepository.findByNameContainingIgnoreCase(name, Pageable.unpaged()).getContent();
-    }
     // Other CRUD operations
 }
