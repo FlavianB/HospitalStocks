@@ -44,7 +44,7 @@
             let sortBy = document.getElementById('sort').value;
             let startDate = document.getElementById('startDate').value;
             let endDate = document.getElementById('endDate').value;
-            location.href = '/entries?sortBy=' + sortBy + '&startDate=' + startDate + '&endDate=' + endDate;
+            location.href = '/consumptions?sortBy=' + sortBy + '&startDate=' + startDate + '&endDate=' + endDate;
         }
     </script>
 </head>
@@ -57,7 +57,7 @@
     </div>
 </header>
 <main class="container d-flex py-4 w-100 flex-grow-1 flex-column align-items-center justify-content-start" style="gap: 20px;">
-    <h2 class="text-center mt-4">List of Entries</h2>
+    <h2 class="text-center mt-4">List of Consumptions</h2>
     <form class="d-flex align-items-center justify-content-between w-100">
         <div class="form-group m-0">
             <label for="sort" class="d-none">Sort by</label>
@@ -91,12 +91,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="entry : ${entryPage.content}">
-            <td th:text="${entry.date}"></td>
-            <td th:text="${entry.quantity}"></td>
-            <td th:text="${entry.drug.name}"></td>
+        <tr th:each="consumption : ${consumptionPage.content}">
+            <td th:text="${consumption.date}"></td>
+            <td th:text="${consumption.quantity}"></td>
+            <td th:text="${consumption.drug.name}"></td>
             <td>
-                <a th:href="@{/entries/download/{id}(id=${entry.id})}" class="btn btn-crimson">Download PDF</a>
+                <a th:href="@{/consumptions/download/{id}(id=${consumption.id})}" class="btn btn-crimson">Download PDF</a>
             </td>
         </tr>
         </tbody>
@@ -104,17 +104,17 @@
 
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${!entryPage.hasPrevious()} ? 'disabled'">
-                <a class="page-link" th:href="@{/entries(page=${entryPage.number - 1}, sortBy=${sortBy}, startDate=${startDate}, endDate=${endDate})}" aria-label="Previous">
-                    <span aria-hidden="true" th:classappend="${entryPage.hasPrevious()} ? 'text-danger'">&laquo;</span>
+            <li class="page-item" th:classappend="${!consumptionPage.hasPrevious()} ? 'disabled'">
+                <a class="page-link" th:href="@{/consumptions(page=${consumptionPage.number - 1}, sortBy=${sortBy}, startDate=${startDate}, endDate=${endDate})}" aria-label="Previous">
+                    <span aria-hidden="true" th:classappend="${consumptionPage.hasPrevious()} ? 'text-danger'">&laquo;</span>
                 </a>
             </li>
             <li class="page-item active">
-                <span class="page-link bg-danger border-danger" th:text="${entryPage.number + 1}">1</span>
+                <span class="page-link bg-danger border-danger" th:text="${consumptionPage.number + 1}">1</span>
             </li>
-            <li class="page-item" th:classappend="${!entryPage.hasNext()} ? 'disabled'">
-                <a class="page-link" th:href="@{/entries(page=${entryPage.number + 1}, sortBy=${sortBy}, startDate=${startDate}, endDate=${endDate})}" aria-label="Next">
-                    <span aria-hidden="true" th:classappend="${entryPage.hasNext()} ? 'text-danger'">&raquo;</span>
+            <li class="page-item" th:classappend="${!consumptionPage.hasNext()} ? 'disabled'">
+                <a class="page-link" th:href="@{/consumptions(page=${consumptionPage.number + 1}, sortBy=${sortBy}, startDate=${startDate}, endDate=${endDate})}" aria-label="Next">
+                    <span aria-hidden="true" th:classappend="${consumptionPage.hasNext()} ? 'text-danger'">&raquo;</span>
                 </a>
             </li>
         </ul>

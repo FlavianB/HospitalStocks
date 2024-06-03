@@ -1,11 +1,8 @@
 package com.example.hospitalstocks.Controllers;
 
-import com.example.hospitalstocks.Entities.Entry;
-import com.example.hospitalstocks.Entities.Supplier;
-import com.example.hospitalstocks.Services.DrugService;
-import com.example.hospitalstocks.Services.EntryService;
+import com.example.hospitalstocks.Entities.Consumption;
 import com.example.hospitalstocks.Services.PDFService;
-import com.example.hospitalstocks.Services.SupplierService;
+import com.example.hospitalstocks.Services.ConsumptionService;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,20 +16,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/entries")
-public class EntryController {
-    private final EntryService entryService;
+@RequestMapping("/consumptions")
+public class ConsumptionController {
+    private final ConsumptionService consumptionService;
     private final PDFService pdfService;
-    private final SupplierService supplierService;
 
-    public EntryController(EntryService entryService, PDFService pdfService, SupplierService supplierService) {
-        this.entryService = entryService;
+    public ConsumptionController(ConsumptionService consumptionService, PDFService pdfService) {
+        this.consumptionService = consumptionService;
         this.pdfService = pdfService;
-        this.supplierService = supplierService;
     }
 
     @GetMapping("")
@@ -41,63 +35,60 @@ public class EntryController {
                                 @RequestParam(required = false) String startDate,
                                 @RequestParam(required = false) String endDate,
                                 Model model) {
-        int pageSize = 30;  // Number of items per page
+        int pageSize = 30;
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by(sortBy).descending());
 
-        Page<Entry> entryPage;
+        Page<Consumption> consumptionPage;
         if (startDate != null && endDate != null) {
             LocalDate start = startDate.isEmpty() ? LocalDate.parse("1900-12-12") : LocalDate.parse(startDate);
             LocalDate end = endDate.isEmpty() ? LocalDate.parse("3000-12-12") : LocalDate.parse(endDate);
-            entryPage = entryService.getAllEntriesByDateRange(start, end, pageable);
+            consumptionPage = consumptionService.getAllConsumptionsByDateRange(start, end, pageable);
         } else {
-            entryPage = entryService.getAllEntries(pageable);
+            consumptionPage = consumptionService.getAllConsumptions(pageable);
         }
 
-        model.addAttribute("entryPage", entryPage);
+        model.addAttribute("consumptionPage", consumptionPage);
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
-        return "entry-list"; // Refers to the Thymeleaf template 'entry-list.html'
+        return "consumption-list"; // Refers to the Thymeleaf template 'consumption-list.html'
     }
 
     @GetMapping("/{id}")
-    public String getEntry(@PathVariable UUID id, Model model) {
-        Entry entry = entryService.getEntryById(id);
-        model.addAttribute("entry", entry);
-        return "entry"; // Refers to the Thymeleaf template 'entry.html'
+    public String getConsumption(@PathVariable UUID id, Model model) {
+        Consumption consumption = consumptionService.getConsumptionById(id);
+        model.addAttribute("consumption", consumption);
+        return "consumption"; // Refers to the Thymeleaf template 'consumption.html'
     }
 
     @GetMapping("/add")
-    public String addEntryForm(Model model) {
-        List<Supplier> suppliers = supplierService.getAllSuppliers();
-
-        model.addAttribute("entry", new Entry());
-        model.addAttribute("suppliers", suppliers);
-        return "add-entry"; // Refers to the Thymeleaf template 'add-entry.html'
+    public String addConsumptionForm(Model model) {
+        model.addAttribute("consumption", new Consumption());
+        return "add-consumption"; // Refers to the Thymeleaf template 'add-consumption.html'
     }
 
     @PostMapping("/add")
-    public String addEntry(@ModelAttribute Entry entry) {
-        entryService.saveEntry(entry);
-        return "redirect:/entries";
+    public String addEntry(@ModelAttribute Consumption consumption) {
+        consumptionService.saveConsumption(consumption);
+        return "redirect:/consumptions";
     }
 
     @PutMapping("/{id}")
-    public String updateEntry(@PathVariable UUID id, @ModelAttribute Entry entry) {
-        entry.setId(id);
-        entryService.saveEntry(entry);
-        return "redirect:/entries";
+    public String updateEntry(@PathVariable UUID id, @ModelAttribute Consumption consumption) {
+        consumption.setId(id);
+        consumptionService.saveConsumption(consumption);
+        return "redirect:/consumptions";
     }
 
     @GetMapping("/download/{id}")
     @ResponseBody
     public ResponseEntity<FileSystemResource> downloadFile(@PathVariable UUID id) {
-        Entry entry = entryService.getEntryById(id);
-        String pdfPath = pdfService.generateEntryPDF(entry);
+        Consumption consumption = consumptionService.getConsumptionById(id);
+        String pdfPath = pdfService.generateConsumptionPDF(consumption);
         FileSystemResource resource = new FileSystemResource(pdfPath);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=entry_" + id + ".pdf");
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=consumption_" + id + ".pdf");
 
         return ResponseEntity.ok()
                 .headers(headers)

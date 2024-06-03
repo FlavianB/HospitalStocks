@@ -12,3 +12,4 @@ public class HospitalStocksApplication {
         SpringApplication.run(HospitalStocksApplication.class, args);
     }
 }
+

@@ -39,10 +39,10 @@
     </div>
 </header>
 <main class="d-flex w-100 flex-grow-1 flex-column align-items-center justify-content-start" style="gap: 20px;">
-    <h2 class="text-center mt-4">Add New Entry</h2>
+    <h2 class="text-center mt-4">Add New Consumption</h2>
     <div class="container card">
         <div class="card-body">
-            <form class="container" th:action="@{/entries/add}" th:object="${entry}" method="post">
+            <form class="container" th:action="@{/consumptions/add}" th:object="${consumption}" method="post">
                 <div class="form-group">
                     <label for="date" class="d-none">Date</label>
                     <input type="date" id="date" th:field="*{date}" class="form-control" placeholder="Date"/>
@@ -59,20 +59,13 @@
                     <span id="selected-drug-name" class="ml-3"></span>
                     <input type="hidden" id="selected-drug" th:field="*{drug.id}" />
                 </div>
-                <div class="form-group">
-                    <label for="supplier" class="d-none">Supplier</label>
-                    <select id="supplier" name="supplierId" class="form-control">
-                        <option value="">Select Supplier</option>
-                        <option th:each="supplier : ${suppliers}" th:value="${supplier.id}" th:text="${supplier.name}"></option>
-                    </select>
-                </div>
                 <div class="form-group m-0">
-                    <button type="submit" class="btn btn-danger">Add Entry</button>
+                    <button type="submit" class="btn btn-danger">Add Consumption</button>
                 </div>
             </form>
         </div>
         <div class="card-footer">
-            <a th:href="@{/entries}" class="btn btn-secondary">Back to Entry List</a>
+            <a th:href="@{/consumptions}" class="btn btn-secondary">Back to Consumption List</a>
         </div>
     </div>
 </main>

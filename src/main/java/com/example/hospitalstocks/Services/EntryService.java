@@ -13,7 +13,6 @@ import java.util.UUID;
 @Service
 @Transactional
 public class EntryService {
-
     private final EntryRepository entryRepository;
 
     public EntryService(EntryRepository entryRepository) {
