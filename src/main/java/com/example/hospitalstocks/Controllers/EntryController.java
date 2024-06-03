@@ -72,7 +72,7 @@ public class EntryController {
         List<Supplier> suppliers = supplierService.getAllSuppliers();
 
         model.addAttribute("entry", new Entry());
-        model.addAttribute("suppliers", suppliers);
+        model.addAttribute("suppliersToSelect", suppliers);
         return "add-entry"; // Refers to the Thymeleaf template 'add-entry.html'
     }
 

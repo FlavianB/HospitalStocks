@@ -61,9 +61,9 @@
                 </div>
                 <div class="form-group">
                     <label for="supplier" class="d-none">Supplier</label>
-                    <select id="supplier" name="supplierId" class="form-control">
+                    <select id="supplier" name="supplierId" class="form-control" th:field="*{supplier.id}">
                         <option value="">Select Supplier</option>
-                        <option th:each="supplier : ${suppliers}" th:value="${supplier.id}" th:text="${supplier.name}"></option>
+                        <option th:each="supplierToSelect : ${suppliersToSelect}" th:value="${supplierToSelect.id}" th:text="${supplierToSelect.name}"></option>
                     </select>
                 </div>
                 <div class="form-group m-0">
