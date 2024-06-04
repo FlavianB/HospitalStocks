@@ -22,7 +22,4 @@ public class Stock {
 
     private int quantity;
     private String location;
-
-    @OneToMany(mappedBy = "stock")
-    private List<Consumption> consumptions;
 }

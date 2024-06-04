@@ -21,8 +21,4 @@ public class Consumption {
     @ManyToOne
     @JoinColumn(name = "drug_id")
     private Drug drug;
-
-    @ManyToOne
-    @JoinColumn(name = "stock_id")
-    private Stock stock;
 }
