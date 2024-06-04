@@ -105,7 +105,6 @@ public class PDFService {
 
             // Adding stock details to the table
             addTableRow(table, "Stock ID", stock.getId().toString());
-            addTableRow(table, "Date", stock.getExpiryDate().toString());
             addTableRow(table, "Quantity", String.valueOf(stock.getQuantity()));
             addTableRow(table, "Drug", stock.getDrug().getName());
 

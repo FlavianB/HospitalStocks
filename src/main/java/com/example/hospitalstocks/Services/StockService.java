@@ -4,13 +4,16 @@ import com.example.hospitalstocks.Entities.Stock;
 import com.example.hospitalstocks.Repositories.StockRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class StockService {
     private final StockRepository stockRepository;
     public StockService(StockRepository stockRepository) {
@@ -18,15 +21,12 @@ public class StockService {
     }
 
     public Page<Stock> getAllStocks(Pageable pageable) {
+        stockRepository.updateStock();
         return stockRepository.findAll(pageable);
     }
 
     public Stock saveStock(Stock stock) {
         return stockRepository.save(stock);
-    }
-
-    public Page<Stock> getAllStocksByExpiryDateRange(LocalDate start, LocalDate end, Pageable pageable) {
-        return stockRepository.findAllByExpiryDateBetween(start, end, pageable);
     }
 
     public Stock getStockById(UUID id) {

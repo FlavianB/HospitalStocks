@@ -97,6 +97,7 @@
             <td th:text="${consumption.drug.name}"></td>
             <td>
                 <a th:href="@{/consumptions/download/{id}(id=${consumption.id})}" class="btn btn-crimson">Download PDF</a>
+                <a th:href="@{/consumptions/delete/{id}(id=${consumption.id})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         </tbody>

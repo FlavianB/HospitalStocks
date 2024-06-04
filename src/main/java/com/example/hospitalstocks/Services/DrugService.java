@@ -35,5 +35,9 @@ public class DrugService {
     public Drug getDrugById(UUID id) {
         return drugRepository.findById(id).orElse(null);
     }
+
+    public void deleteDrug(UUID id) {
+        drugRepository.deleteById(id);
+    }
     // Other CRUD operations
 }

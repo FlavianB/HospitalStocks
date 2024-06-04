@@ -22,8 +22,6 @@ public class Stock {
 
     private int quantity;
     private String location;
-    //private String batchNumber;
-    private LocalDate expiryDate;
 
     @OneToMany(mappedBy = "stock")
     private List<Consumption> consumptions;

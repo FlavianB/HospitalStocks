@@ -71,12 +71,28 @@ public class DrugController {
         return "redirect:/drugs";
     }
 
-    @PutMapping("/{id}")
-    public String updateDrug(@PathVariable UUID id, @ModelAttribute Drug drug) {
+    @GetMapping("/edit/{id}")
+    public String showEditDrugForm(@PathVariable UUID id, Model model) {
+        Drug drug = drugService.getDrugById(id);
+        List<Supplier> suppliers = supplierService.findAll();
+        model.addAttribute("drug", drug);
+        model.addAttribute("suppliers", suppliers);
+        return "edit-drug";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editDrug(@PathVariable UUID id, @ModelAttribute Drug drug) {
         drug.setId(id);
         drugService.saveDrug(drug);
         return "redirect:/drugs";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteDrug(@PathVariable UUID id) {
+        drugService.deleteDrug(id);
+        return "redirect:/drugs";
+    }
+
 }
 
 

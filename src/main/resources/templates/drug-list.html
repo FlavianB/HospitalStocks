@@ -19,16 +19,6 @@
             background-color: transparent;
             color: #e7e7e7;
         }
-
-        .btn-crimson {
-            background-color: crimson;
-            color: white;
-        }
-
-        .btn-crimson:hover {
-            background-color: darkred;
-            color: white;
-        }
     </style>
 </head>
 <body class="d-flex flex-column align-items-center justify-content-space-between min-vh-100">
@@ -75,12 +65,12 @@
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Manufacturer</th>
-            <th>Main Component</th>
-            <th>Secondary Component</th>
-            <th>Actions</th>
+            <th class="text-center">Name</th>
+            <th class="text-center">Description</th>
+            <th class="text-center">Manufacturer</th>
+            <th class="text-center">Main Component</th>
+            <th class="text-center">Secondary Component</th>
+            <th class="text-center">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -90,8 +80,10 @@
             <td th:text="${drug.manufacturer}"></td>
             <td th:text="${drug.mainComponent}"></td>
             <td th:text="${drug.secondaryComponent}"></td>
-            <td>
-                <a th:href="@{/drugs/{id}(id=${drug.id})}" class="btn btn-crimson">View Details</a>
+            <td class="d-flex" style="gap: 10px;">
+                <a th:href="@{/drugs/{id}(id=${drug.id})}" class="btn btn-danger" style="width: 120px;">View Details</a>
+                <a th:href="@{/drugs/edit/{id}(id=${drug.id})}" class="btn btn-danger">Edit</a>
+                <a th:href="@{/drugs/delete/{id}(id=${drug.id})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         </tbody>
