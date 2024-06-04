@@ -32,5 +32,13 @@ public class StockService {
     public Stock getStockById(UUID id) {
         return stockRepository.findById(id).orElse(null);
     }
+
+    public void updateReorderLevel(UUID id, int newReorderLevel) {
+        Stock stock = stockRepository.findById(id).orElse(null);
+        if (stock != null) {
+            stock.setReorderLevel(newReorderLevel);
+            stockRepository.save(stock);
+        }
+    }
     // Other CRUD operations
 }

@@ -17,7 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.UUID;
+
+import static java.lang.Integer.parseInt;
 
 @Controller
 @RequestMapping("/stocks")
@@ -43,4 +46,16 @@ public class StockController {
 
         return "stock-list"; // Refers to the Thymeleaf template 'stock-list.html'
     }
+
+    @PostMapping("/edit/{id}")
+    @ResponseBody
+    public ResponseEntity<String> editStock(@PathVariable UUID id, @RequestBody Map<String, Object> updates) {
+        if (updates.containsKey("reorderLevel")) {
+            int newReorderLevel = parseInt(updates.get("reorderLevel").toString(), 10);
+            stockService.updateReorderLevel(id, newReorderLevel);
+            return ResponseEntity.ok("Reorder level updated successfully");
+        }
+        return ResponseEntity.badRequest().body("Invalid request");
+    }
+
 }

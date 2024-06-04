@@ -20,7 +20,7 @@
             color: #e7e7e7;
         }
 
-        *{
+        * {
             font-family: Montserrat, sans-serif;
         }
     </style>
@@ -29,11 +29,44 @@
             let sortBy = document.getElementById('sort').value;
             location.href = '/stocks?sortBy=' + sortBy;
         }
+
+        function editReorderLevel(button) {
+            const stockId = button.getAttribute('data-id');
+            const inputField = document.getElementById(`reorderLevel-${stockId}`);
+            inputField.readOnly = false;
+            inputField.focus();
+        }
+
+        function saveReorderLevel(button) {
+            const stockId = button.getAttribute('data-id');
+            const inputField = document.getElementById(`reorderLevel-${stockId}`);
+            const newReorderLevel = inputField.value;
+
+            fetch(`/stocks/edit/${stockId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ reorderLevel: newReorderLevel }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        inputField.readOnly = true;
+                        alert('Reorder level updated successfully');
+                    } else {
+                        alert('Failed to update reorder level');
+                    }
+                });
+        }
     </script>
 </head>
 <body class="d-flex flex-column align-items-center justify-content-space-between min-vh-100">
 <header class="bg-danger text-white p-4 w-100 d-flex justify-content-between align-items-center">
-    <a href = "/" style="text-decoration: none; color: white;"><h3 style="font-family: Montserrat, sans-serif; font-weight: 800; margin: 0; user-select: none;">MedStock</h3></a>
+    <a href="/" style="text-decoration: none; color: white;">
+        <h3 style="font-family: Montserrat, sans-serif; font-weight: 800; margin: 0; user-select: none;">
+            MedStock
+        </h3>
+    </a>
     <div>
         <a href="/" class="btn btn-header"><i class="fa-solid fa-house"></i></a>
         <a href="/perform_logout" class="btn btn-header"><i class="fa-solid fa-right-from-bracket"></i></a>
@@ -45,23 +78,25 @@
         <div class="form-group m-0">
             <label for="sort" class="d-none">Sort by</label>
             <select id="sort" class="form-control" onchange="applySort()">
-                <option th:value="drug" th:selected="${sortBy == 'drug.name'}">Drug name</option>
-                <option th:value="drug" th:selected="${sortBy == 'quantity'}">Quantity</option>
+                <option th:value="drug.name" th:selected="${sortBy == 'drug.name'}">Drug name</option>
+                <option th:value="quantity" th:selected="${sortBy == 'quantity'}">Quantity</option>
             </select>
         </div>
     </form>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
-            <th>Drug</th>
-            <th>Quantity</th>
-            <th>Location</th>
+            <th class="text-center">Drug</th>
+            <th class="text-center">Quantity</th>
+            <th class="text-center">Reorder level</th>
+            <th class="text-center">Location</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="stock : ${stockPage.content}">
             <td th:text="${stock.drug.name}"></td>
             <td th:text="${stock.quantity}"></td>
+            <td th:text="${stock.reorderLevel}"></td>
             <td th:text="${stock.location}"></td>
         </tr>
         </tbody>
@@ -70,7 +105,7 @@
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${!stockPage.hasPrevious()} ? 'disabled'">
-                <a class="page-link" th:href="@{/stocks(page=${stockPage.number - 1}, sortBy=${sortBy}, startDate=${startDate}, endDate=${endDate})}" aria-label="Previous">
+                <a class="page-link" th:href="@{/stocks(page=${stockPage.number - 1}, sortBy=${sortBy})}" aria-label="Previous">
                     <span aria-hidden="true" th:classappend="${stockPage.hasPrevious()} ? 'text-danger'">&laquo;</span>
                 </a>
             </li>
@@ -78,7 +113,7 @@
                 <span class="page-link bg-danger border-danger" th:text="${stockPage.number + 1}">1</span>
             </li>
             <li class="page-item" th:classappend="${!stockPage.hasNext()} ? 'disabled'">
-                <a class="page-link" th:href="@{/stocks(page=${stockPage.number + 1}, sortBy=${sortBy}, startDate=${startDate}, endDate=${endDate})}" aria-label="Next">
+                <a class="page-link" th:href="@{/stocks(page=${stockPage.number + 1}, sortBy=${sortBy})}" aria-label="Next">
                     <span aria-hidden="true" th:classappend="${stockPage.hasNext()} ? 'text-danger'">&raquo;</span>
                 </a>
             </li>

@@ -19,6 +19,7 @@ public class Drug {
     private String manufacturer;
     private String mainComponent;
     private String secondaryComponent;
+    private int reorderLevel;
 
     @ManyToMany
     @JoinTable(

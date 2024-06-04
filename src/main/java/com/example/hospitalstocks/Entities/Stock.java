@@ -20,6 +20,7 @@ public class Stock {
     @JoinColumn(name = "drug_id")
     private Drug drug;
 
+    private int reorderLevel;
     private int quantity;
     private String location;
 }

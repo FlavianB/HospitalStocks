@@ -46,6 +46,7 @@
             <p><strong>Main Component:</strong> <span th:text="${drug.mainComponent}">Paracetamol</span></p>
             <p th:if="${drug.secondaryComponent != ''}"><strong>Secondary Component:</strong> <span th:text="${drug.secondaryComponent}">Paracetamol</span></p>
             <p th:if="${drug.suppliers != null}"><strong>Suppliers:</strong> <span th:each="supplier : ${drug.suppliers}"><span th:text="${supplier.name}">Paracetamol</span></span></p>
+            <p><strong>Reorder level:</strong> <span th:text="${drug.reorderLevel}">Paracetamol</span></p>
         </div>
         <a th:href="@{/drugs}" class="btn btn-danger">Back to Drug List</a>
     </div>

@@ -66,6 +66,10 @@
                         <input type="text" id="secondary-component" th:field="*{secondaryComponent}" class="form-control" placeholder="Secondary Component"/>
                     </div>
                     <div class="form-group">
+                        <label for="reorder-level" class="d-none">Reorder level</label>
+                        <input type="number" id="reorder-level" th:field="*{reorderLevel}" class="form-control"/>
+                    </div>
+                    <div class="form-group">
                         <button type="button" class="btn btn-secondary mb-2" data-toggle="modal" data-target="#supplierModal">
                             Select Suppliers
                         </button>
