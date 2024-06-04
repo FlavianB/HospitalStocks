@@ -32,4 +32,8 @@ public class ConsumptionService {
     public void saveConsumption(Consumption consumption) {
         consumptionRepository.save(consumption);
     }
+
+    public void deleteConsumption(UUID id) {
+        consumptionRepository.deleteById(id);
+    }
 }

@@ -35,7 +35,7 @@
 </header>
 <main class="d-flex w-100 flex-grow-1 flex-column align-items-center">
     <h2 class="text-center mt-4" style="padding: 20px;">Welcome to the Hospital Management System <i class="fa-solid fa-notes-medical"></i></h2>
-    <div class="container">
+    <div class="container" style="margin-bottom: 30px;">
         <div class="row mt-3 gap">
             <div class="col-md-4">
                 <div class="card" style="min-height: 200px;">
@@ -107,14 +107,25 @@
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-12 mb-3">
+            <div class="col-md-6">
+                <div class="card" style="min-height: 200px;">
+                    <div class="card-header">
+                        <h5 class="m-0">View Current Stocks</h5>
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <p class="card-text">View current drug stocks.</p>
+                        <a href="/stocks" class="btn btn-danger">View Current Stocks</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="card" style="min-height: 200px;">
                     <div class="card-header">
                         <h5 class="m-0">View Statistics</h5>
                     </div>
                     <div class="card-body d-flex flex-column justify-content-between">
                         <p class="card-text">View various statistics about drug stock and usage.</p>
-                        <a href="/stocks" class="btn btn-danger">View Statistics</a>
+                        <a href="/statistics" class="btn btn-danger">View Statistics</a>
                     </div>
                 </div>
             </div>

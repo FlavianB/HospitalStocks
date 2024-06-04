@@ -76,6 +76,12 @@ public class EntryController {
         return "add-entry"; // Refers to the Thymeleaf template 'add-entry.html'
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteEntry(@PathVariable UUID id) {
+        entryService.deleteEntry(id);
+        return "redirect:/entries";
+    }
+
     @PostMapping("/add")
     public String addEntry(@ModelAttribute Entry entry) {
         entryService.saveEntry(entry);

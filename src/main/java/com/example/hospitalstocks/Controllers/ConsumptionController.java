@@ -73,6 +73,12 @@ public class ConsumptionController {
         return "redirect:/consumptions";
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteEntry(@PathVariable UUID id) {
+        consumptionService.deleteConsumption(id);
+        return "redirect:/consumptions";
+    }
+
     @PutMapping("/{id}")
     public String updateEntry(@PathVariable UUID id, @ModelAttribute Consumption consumption) {
         consumption.setId(id);
