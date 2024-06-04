@@ -43,9 +43,10 @@
                 <div class="card" style="min-height: 200px;">
                     <div class="card-header">
                         <h5 class="m-0">Drugs Near Reorder Level</h5>
+                        <a th:href="@{/statistics/download/drugsNearReorderLevel}" class="btn btn-crimson">Download CSV</a>
                     </div>
                     <div class="card-body">
-                        <pre th:text="${drugsNearReorderLevel}"></pre>
+                        <pre th:each="entry : ${drugsNearReorderLevel}" th:text="${entry}"></pre>
                     </div>
                 </div>
             </div>
@@ -55,9 +56,10 @@
                 <div class="card" style="min-height: 200px;">
                     <div class="card-header">
                         <h5 class="m-0">Monthly Drug Consumption</h5>
+                        <a th:href="@{/statistics/download/monthlyDrugConsumption}" class="btn btn-crimson">Download CSV</a>
                     </div>
                     <div class="card-body">
-                        <pre th:text="${monthlyDrugConsumption}"></pre>
+                        <pre th:each="entry : ${monthlyDrugConsumption}" th:text="${entry}"></pre>
                     </div>
                 </div>
             </div>
@@ -67,9 +69,10 @@
                 <div class="card" style="min-height: 200px;">
                     <div class="card-header">
                         <h5 class="m-0">Monthly Drug Entries</h5>
+                        <a th:href="@{/statistics/download/monthlyDrugEntries}" class="btn btn-crimson">Download CSV</a>
                     </div>
                     <div class="card-body">
-                        <pre th:text="${monthlyDrugEntries}"></pre>
+                        <pre th:each="entry : ${monthlyDrugEntries}" th:text="${entry}"></pre>
                     </div>
                 </div>
             </div>
@@ -79,9 +82,10 @@
                 <div class="card" style="min-height: 200px;">
                     <div class="card-header">
                         <h5 class="m-0">Top Suppliers</h5>
+                        <a th:href="@{/statistics/download/topSuppliers}" class="btn btn-crimson">Download CSV</a>
                     </div>
                     <div class="card-body">
-                        <pre th:text="${monthlyDrugExpiry}"></pre>
+                        <pre th:each="entry : ${topSuppliers}" th:text="${entry}"></pre>
                     </div>
                 </div>
             </div>

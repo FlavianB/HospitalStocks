@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,67 +15,56 @@ public class StatisticsService{
         this.entityManager = entityManager;
     }
 
-    public String getDrugsNearReorderLevel() {
-        StringBuilder resultString = new StringBuilder();
-
+    public List<String> getDrugsNearReorderLevel() {
+        List<String> result = new ArrayList<>();
         Query query = entityManager.createNativeQuery("SELECT * FROM public.drugsnearreorderlevel()");
         List<Object[]> results = query.getResultList();
 
         for (Object[] row : results) {
-            resultString.append("Name: ").append(row[0])
-                    .append(", Current Quantity: ").append(row[1])
-                    .append(", Reorder Level: ").append(row[2])
-                    .append("\n");
+            String line = "Name: " + row[0] + ", Current Quantity: " + row[1] + ", Reorder Level: " + row[2];
+            result.add(line);
         }
 
-        return resultString.toString();
+        return result;
     }
 
-    public String getMonthlyDrugConsumption() {
-        StringBuilder resultString = new StringBuilder();
-
+    public List<String> getMonthlyDrugConsumption() {
+        List<String> result = new ArrayList<>();
         Query query = entityManager.createNativeQuery("SELECT * FROM public.monthlydrugconsumption()");
         List<Object[]> results = query.getResultList();
 
         for (Object[] row : results) {
-            resultString.append("Name: ").append(row[0])
-                    .append(", Month: ").append(row[1])
-                    .append(", Quantity: ").append(row[2])
-                    .append("\n");
+            String line = "Name: " + row[0] + ", Month: " + row[1] + ", Quantity: " + row[2];
+            result.add(line);
         }
 
-        return resultString.toString();
+        return result;
     }
 
-    public String getMonthlyDrugEntries() {
-        StringBuilder resultString = new StringBuilder();
-
+    public List<String> getMonthlyDrugEntries() {
+        List<String> result = new ArrayList<>();
         Query query = entityManager.createNativeQuery("SELECT * FROM public.monthlydrugentries()");
         List<Object[]> results = query.getResultList();
 
         for (Object[] row : results) {
-            resultString.append("Name: ").append(row[0])
-                    .append(", Month: ").append(row[1])
-                    .append(", Quantity: ").append(row[2])
-                    .append("\n");
+            String line = "Name: " + row[0] + ", Month: " + row[1] + ", Quantity: " + row[2];
+            result.add(line);
         }
 
-        return resultString.toString();
+        return result;
     }
 
-    public String getTopSuppliers() {
-        StringBuilder resultString = new StringBuilder();
-
+    public List<String> getTopSuppliers() {
+        List<String> result = new ArrayList<>();
         Query query = entityManager.createNativeQuery("SELECT * FROM public.top_suppliers()");
         List<Object[]> results = query.getResultList();
 
         for (Object[] row : results) {
-            resultString.append("Name: ").append(row[0])
-                    .append(", Total Quantity: ").append(row[1])
-                    .append("\n");
+            String line = "Name: " + row[0] + ", Total Quantity: " + row[1];
+            result.add(line);
         }
 
-        return resultString.toString();
+        return result;
     }
 }
 
